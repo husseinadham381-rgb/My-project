@@ -30,17 +30,17 @@
 
                 <div>
                     <label id="name-label" class="block mb-1.5 text-sm font-medium text-gray-300">اسم الطالب بالكامل</label>
-                    <input id="username" type="text" placeholder="اكتب الاسم هنا..." class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-right">
+                    <input id="username" type="text" placeholder="اكتب الاسم هنا..." class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] text-right">
                 </div>
 
                 <div id="phone-area">
                     <label class="block mb-1.5 text-sm font-medium text-gray-300">رقم الهاتف (واتساب)</label>
-                    <input id="userphone" type="tel" placeholder="01xxxxxxxxx" class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-center font-mono">
+                    <input id="userphone" type="tel" placeholder="01xxxxxxxxx" class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white text-center font-mono">
                 </div>
 
                 <div id="otp-area" class="hidden space-y-2 bg-[#0B132B] p-4 rounded-xl border border-[#FF4D6D] border-opacity-30">
                     <label class="block text-sm font-medium text-gray-300">أدخل كود الأدمن السري</label>
-                    <input id="otp-code" type="password" placeholder="••••••" class="w-full px-4 py-2.5 rounded-xl bg-[#1C2541] border border-[#3A506B] text-white text-center tracking-widest font-bold focus:outline-none focus:border-[#FF4D6D]">
+                    <input id="otp-code" type="password" placeholder="••••••" class="w-full px-4 py-2.5 rounded-xl bg-[#1C2541] border border-[#3A506B] text-white text-center font-bold tracking-widest focus:outline-none">
                 </div>
 
                 <button type="button" id="login-btn" class="flex items-center justify-center w-full gap-2 py-3 bg-gradient-to-r from-[#48CAE4] to-[#00B4D8] text-[#0B132B] font-bold rounded-xl shadow-lg hover:opacity-90 transition-opacity">
@@ -51,38 +51,48 @@
     </div>
 
     <div id="admin-view" class="hidden min-h-screen p-4 md:p-8">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-6 shadow-xl">
+        <div class="max-w-4xl mx-auto space-y-6">
+            <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] shadow-xl">
                 <div>
                     <h1 class="text-xl font-bold">لوحة تحكم المهندس أدهم حسين 👑</h1>
-                    <p class="text-xs text-gray-400">إدارة المحتوى والرفع السحابي المباشر لقاعدة البيانات</p>
+                    <p class="text-xs text-gray-400">رفع المحاضرات، المذكرات، والمراجعات مباشرة للسيرفر</p>
                 </div>
-                <button onclick="logout()" class="px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 text-xs hover:bg-red-600 hover:text-white transition-all font-bold">تسجيل خروج</button>
+                <button onclick="logout()" class="px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 text-xs font-bold">تسجيل خروج</button>
             </div>
 
-            <div class="bg-[#1C2541] p-6 rounded-xl border border-[#3A506B] max-w-xl mx-auto space-y-4 shadow-lg">
+            <div class="bg-[#1C2541] p-6 rounded-xl border border-[#3A506B] space-y-4 shadow-lg">
                 <h2 class="text-md font-bold text-[#48CAE4] flex items-center gap-2">
-                    <i data-lucide="file-plus"></i> إضافة مذكرات / كتب بصيغة PDF حقيقية
+                    <i data-lucide="upload-cloud"></i> رفع محتوى جديد للمنصة
                 </h2>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">اختر المادة الدراسية:</label>
-                    <select id="res-subject" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-white focus:outline-none focus:border-[#48CAE4]">
-                        <option value="لغة عربية">اللغة العربية 📚</option>
-                        <option value="فيزياء">الفيزياء ⚡</option>
-                        <option value="كيمياء">الكيمياء 🧪</option>
-                        <option value="أحياء">الأحياء 🧬</option>
-                    </select>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">اختر القسم:</label>
+                        <select id="res-type" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-white">
+                            <option value="LECTURE">🎥 محاضرة فيديو / شرح</option>
+                            <option value="NOTE">📄 مذكرة أو كتاب PDF</option>
+                            <option value="REVISION">📝 مراجعة وامتحانات</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">اختر المادة الدراسية:</label>
+                        <select id="res-subject" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-white">
+                            <option value="لغة عربية">اللغة العربية 📚</option>
+                            <option value="فيزياء">الفيزياء ⚡</option>
+                            <option value="كيمياء">الكيمياء 🧪</option>
+                            <option value="أحياء">الأحياء 🧬</option>
+                        </select>
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1">اسم الكتاب أو المذكرة:</label>
-                    <input id="res-title" type="text" placeholder="مثال: مذكرة الفصل الأول" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-right text-white focus:outline-none focus:border-[#48CAE4]">
+                    <label class="block text-xs text-gray-400 mb-1">العنوان (مثال: شرح الباب الأول / مذكرة الأحياء):</label>
+                    <input id="res-title" type="text" placeholder="اكتب العنوان هنا..." class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-white text-right">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1">اختر ملف الـ PDF من جهازك:</label>
-                    <input id="res-file" type="file" accept=".pdf" class="w-full px-2 py-1.5 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-gray-300">
+                    <label class="block text-xs text-gray-400 mb-1">اختر الملف (PDF أو فيديو):</label>
+                    <input id="res-file" type="file" class="w-full px-2 py-1.5 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-gray-300">
                 </div>
-                <button type="button" id="upload-btn" class="w-full py-3 bg-gradient-to-r from-purple-500 to-indigo-600 font-bold text-xs rounded-lg shadow-lg hover:opacity-90 transition-opacity">
-                    رفع ونشر الملف على السيرفر السحابي فوراً ☁️
+                <button type="button" id="upload-btn" class="w-full py-3 bg-gradient-to-r from-purple-500 to-indigo-600 font-bold text-xs rounded-lg shadow-md hover:opacity-90">
+                    نشر وتثبيت المحتوى على السيرفر فوراً 🚀
                 </button>
             </div>
         </div>
@@ -97,10 +107,13 @@
                 <button onclick="logout()" class="px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 text-xs font-bold">خروج</button>
             </div>
 
+            <div class="flex gap-2 border-b border-[#3A506B] pb-2">
+                <button onclick="filterStudentContent('LECTURE')" id="tab-LECTURE" class="px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white">🎥 المحاضرات والشرح</button>
+                <button onclick="filterStudentContent('NOTE')" id="tab-NOTE" class="px-4 py-2 rounded-lg text-xs font-bold bg-[#1C2541] text-gray-400">📄 المذكرات والكتب</button>
+                <button onclick="filterStudentContent('REVISION')" id="tab-REVISION" class="px-4 py-2 rounded-lg text-xs font-bold bg-[#1C2541] text-gray-400">📝 المراجعات والامتحانات</button>
+            </div>
+
             <div class="bg-[#1C2541] p-6 rounded-xl border border-[#3A506B] shadow-lg">
-                <h2 class="text-sm font-bold text-indigo-400 mb-4 pb-2 border-b border-[#3A506B] border-opacity-30 flex items-center gap-2">
-                    <i data-lucide="download-cloud"></i> مذكرات وكتب الـ PDF المتاحة للتحميل المباشر:
-                </h2>
                 <div id="student-files-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     </div>
             </div>
@@ -110,16 +123,14 @@
     <script type="module">
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-        // المفاتيح الحقيقية والسرية المأخوذة من سيرفر أدهم
         const SUPABASE_URL = "https://mpeymoqzflinxjlaqztv.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wZXltb3F6ZmxpbnhqbGFxenR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1OTMwNzMsImV4cCI6MjA5NjE2OTA3M30.vpye52u7x_WtAKNt1vmgbZdntW372VcuXmAtZP1d3KI";
 
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // متغير حفظ حالة الحساب الحالي (افتراضي: طالب)
         let currentRole = 'STUDENT';
+        let activeTab = 'LECTURE'; 
+        let allFetchedData = [];
 
-        // ربط الدوال بنوافذ المتصفح العالمية لتشتغل مع أزرار الـ HTML بسلاسة
         window.switchRole = function(role) {
             currentRole = role;
             const btnStudent = document.getElementById('btn-student');
@@ -130,24 +141,19 @@
             
             if(role === 'STUDENT') {
                 btnStudent.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]";
-                btnAdmin.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
-                phoneArea.classList.remove('hidden'); 
-                otpArea.classList.add('hidden');
+                btnAdmin.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B]";
+                phoneArea.classList.remove('hidden'); otpArea.classList.add('hidden');
                 nameLabel.innerText = "اسم الطالب بالكامل";
             } else {
                 btnAdmin.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#FF4D6D] text-white border-[#FF4D6D]";
-                btnStudent.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
-                phoneArea.classList.add('hidden'); 
-                otpArea.classList.remove('hidden');
+                btnStudent.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B]";
+                phoneArea.classList.add('hidden'); otpArea.classList.remove('hidden');
                 nameLabel.innerText = "اسم الأدمن (أدهم)";
             }
         }
 
-        window.logout = function() {
-            window.location.reload();
-        }
+        window.logout = function() { window.location.reload(); }
 
-        // دالة التحكم في تسجيل الدخول
         async function handleLogin() {
             const name = document.getElementById('username').value.trim();
             const phone = document.getElementById('userphone').value.trim();
@@ -156,116 +162,117 @@
             if(!name) { alert('من فضلك اكتب الاسم أولاً'); return; }
 
             if (currentRole === 'ADMIN') {
-                // الباسورد السري الخاص بلوحة تحكم أدهم
                 if(otp === "2026") { 
                     document.getElementById('login-view').classList.add('hidden');
                     document.getElementById('admin-view').classList.remove('hidden');
-                    lucide.createIcons(); // تحديث الأيقونات في واجهة الأدمن
-                } else {
-                    alert('كود الأدمن السري خطأ! تأكد من الكود المكتوب.');
-                }
+                    lucide.createIcons();
+                } else { alert('كود الأدمن السري خطأ!'); }
             } else {
-                if(!phone) { alert('من فضلك اكتب رقم التليفون المربوط بالواتساب'); return; }
+                if(!phone) { alert('من فضلك اكتب رقم الهاتف'); return; }
                 document.getElementById('login-view').classList.add('hidden');
                 document.getElementById('student-view').classList.remove('hidden');
                 document.getElementById('student-name').innerText = name;
-                lucide.createIcons(); // تحديث الأيقونات في واجهة الطالب
-                
-                // جلب المذكرات المرفوعة فوراً للطالب من الداتا بيز
-                fetchResources();
+                lucide.createIcons();
+                fetchResources(); // سحب كل البيانات فوراً
             }
         }
 
-        // دالة الرفع السحابي المباشر لملفات الـ PDF داخل السيرفر
         async function handleUpload() {
+            const type = document.getElementById('res-type').value;
             const subject = document.getElementById('res-subject').value;
             const title = document.getElementById('res-title').value.trim();
             const fileInput = document.getElementById('res-file');
             const uploadBtn = document.getElementById('upload-btn');
 
             if(!title || fileInput.files.length === 0) {
-                alert('من فضلك اكتب عنوان المذكرة واختر ملف الـ PDF أولاً!');
+                alert('اكتب العنوان واختر الملف أولاً!');
                 return;
             }
 
             const file = fileInput.files[0];
             const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
-            const filePath = `${fileName}`;
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 5)}.${fileExt}`;
 
             uploadBtn.disabled = true;
-            uploadBtn.innerText = "⏳ جاري رفع وتشفير ملف الـ PDF على السيرفر...";
+            uploadBtn.innerText = "⏳ جاري رفع الملف وتأمين الاتصال بالسيرفر...";
 
-            // 1. رفع الملف الفعلي إلى الـ Storage باكت: nabga-media
+            // الرفع للهارد
             const { data: storageData, error: storageError } = await supabase.storage
                 .from('nabga-media')
-                .upload(filePath, file, { cacheControl: '3600', upsert: false });
+                .upload(fileName, file, { cacheControl: '3600', upsert: false });
 
             if (storageError) {
-                alert('حدث خطأ أثناء الرفع للهارد السحابي: ' + storageError.message);
+                alert('خطأ السيرفر: تأكد من تفعيل الـ Policies في سوبابيز للباكت. تفاصيل: ' + storageError.message);
                 uploadBtn.disabled = false;
-                uploadBtn.innerText = "رفع ونشر الملف على السيرفر السحابي فوراً ☁️";
+                uploadBtn.innerText = "نشر وتثبيت المحتوى على السيرفر فوراً 🚀";
                 return;
             }
 
-            // جلب الرابط العام للملف المرفوع
-            const { data: urlData } = supabase.storage.from('nabga-media').getPublicUrl(filePath);
+            const { data: urlData } = supabase.storage.from('nabga-media').getPublicUrl(fileName);
             const publicUrl = urlData.publicUrl;
 
-            // 2. إدخال السجل في جدول قاعدة البيانات لكي يظهر عند الطلاب
+            // الحفظ في الجدول
             const { error: dbError } = await supabase
                 .from('platform_resources')
-                .insert([{ subject: subject, title: title, url: publicUrl, type: 'NOTE' }]);
+                .insert([{ subject: subject, title: title, url: publicUrl, type: type }]);
 
             uploadBtn.disabled = false;
-            uploadBtn.innerText = "رفع ونشر الملف على السيرفر السحابي فوراً ☁️";
+            uploadBtn.innerText = "نشر وتثبيت المحتوى على السيرفر فوراً 🚀";
 
             if (dbError) {
-                alert('خطأ في التسجيل بقاعدة البيانات: ' + dbError.message);
+                alert('خطأ في قاعدة البيانات: ' + dbError.message);
             } else {
-                alert('تم رفع المذكرة بنجاح تام وتخزينها في قاعدة بيانات السيرفر الحقيقية! 🚀');
+                alert('تم الرفع والنشر بنجاح كبير في كل الأقسام! 🎉');
                 document.getElementById('res-title').value = '';
                 document.getElementById('res-file').value = '';
             }
         }
 
-        // دالة جلب وعرض الملفات للطلاب لايف من سوبابيز
         async function fetchResources() {
-            const { data, error } = await supabase
-                .from('platform_resources')
-                .select('*')
-                .eq('type', 'NOTE')
-                .order('id', { ascending: false });
+            const { data, error } = await supabase.from('platform_resources').select('*').order('id', { ascending: false });
+            if (error) { console.error(error); return; }
+            allFetchedData = data || [];
+            renderFilteredContent();
+        }
 
-            if (error) {
-                console.error('خطأ في جلب البيانات:', error);
-                return;
-            }
+        window.filterStudentContent = function(type) {
+            activeTab = type;
+            const tabs = ['LECTURE', 'NOTE', 'REVISION'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if(t === type) {
+                    el.className = "px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white";
+                } else {
+                    el.className = "px-4 py-2 rounded-lg text-xs font-bold bg-[#1C2541] text-gray-400";
+                }
+            });
+            renderFilteredContent();
+        }
 
+        function renderFilteredContent() {
             const container = document.getElementById('student-files-list');
-            if(!data || data.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-500 text-center w-full py-4">لا توجد مذكرات أو كتب مرفوعة حالياً في قاعدة البيانات.</p>`;
+            const filtered = allFetchedData.filter(item => item.type === activeTab);
+
+            if(filtered.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 text-center w-full py-4">لا يوجد محتوى متوفر حالياً في هذا القسم.</p>`;
                 return;
             }
 
-            container.innerHTML = data.map(file => `
+            container.innerHTML = filtered.map(file => `
                 <div class="p-4 bg-[#0B132B] rounded-xl border border-[#3A506B] flex justify-between items-center text-xs shadow-md">
                     <div>
                         <span class="bg-indigo-500 bg-opacity-20 text-indigo-300 px-2 py-0.5 rounded text-[10px] ml-2 font-bold">${file.subject}</span>
                         <p class="font-bold text-white inline-block">${file.title}</p>
                     </div>
-                    <a href="${file.url}" target="_blank" download class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-colors shadow">
-                        📄 تحميل وقراءة
+                    <a href="${file.url}" target="_blank" download class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-colors">
+                        ${activeTab === 'LECTURE' ? '🎥 فتح وتشغيل' : '📄 تحميل وقراءة'}
                     </a>
                 </div>
             `).join('');
         }
 
-        // ربط أزرار الـ Click بالدوال البرمجية المباشرة داخل الموديول
         document.getElementById('login-btn').addEventListener('click', handleLogin);
         document.getElementById('upload-btn').addEventListener('click', handleUpload);
-
-        // تفعيل الأيقونات لأول مرة عند تحميل الصفحة
         lucide.createIcons();
     </script>
 </body>

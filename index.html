@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة أَدْهَم التعليمية</title>
-    <!-- استدعاء Tailwind CSS السريع لتنسيق الألوان والأشكال -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء أيقونات Lucide الفخمة -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-[#0B132B] text-white font-sans min-h-screen">
 
-    <!-- 1. شاشة تسجيل الدخول -->
     <div id="login-view" class="flex flex-col items-center justify-center min-h-screen p-4">
         <div class="w-full max-w-md p-8 rounded-2xl bg-[#1C2541] border border-[#3A506B] shadow-2xl">
             <div class="flex flex-col items-center mb-8 text-center">
                 <div class="p-4 bg-[#48CAE4] bg-opacity-20 rounded-full mb-3 text-[#48CAE4]">
-                    <i data-lucide="graduation-cap" class="w-10 h-10"></i>
+                    <i data-lucide="shield-check" class="w-10 h-10"></i>
                 </div>
                 <h1 class="text-3xl font-bold tracking-wide">منصة أَدْهَم</h1>
-                <p class="mt-2 text-sm text-gray-400">نظام إدارة الامتحانات والتقييم الذكي</p>
+                <p class="mt-2 text-sm text-gray-400">نظام إدارة الامتحانات الآمن بالكامل</p>
             </div>
 
             <div class="space-y-6">
@@ -36,35 +33,42 @@
                     </div>
                 </div>
 
+                <div id="otp-area" class="hidden space-y-2 bg-[#0B132B] p-4 rounded-xl border border-[#FF4D6D] border-opacity-30">
+                    <div class="flex items-center gap-2 text-xs text-[#FF4D6D] font-bold mb-1">
+                        <i data-lucide="smartphone" class="w-4 h-4"></i>
+                        <span>تم إرسال كود التحقق السري إلى الرقم: 01270921234</span>
+                    </div>
+                    <label class="block text-sm font-medium text-gray-300">أدخل كود الـ OTP السري</label>
+                    <input id="otp-code" type="password" placeholder="••••••" class="w-full px-4 py-3 rounded-xl bg-[#1C2541] border border-[#3A506B] text-white text-center tracking-widest font-bold focus:outline-none focus:border-[#FF4D6D]">
+                </div>
+
                 <div id="login-error" class="hidden flex items-center gap-2 p-3 text-sm text-[#FF4D6D] bg-[#FF4D6D] bg-opacity-10 border border-[#FF4D6D] rounded-xl">
                     <i data-lucide="shield-alert" class="w-5 h-5"></i>
                     <span id="error-text"></span>
                 </div>
 
                 <button onclick="handleLogin()" class="flex items-center justify-center w-full gap-2 py-3.5 bg-gradient-to-r from-[#48CAE4] to-[#00B4D8] text-[#0B132B] font-bold rounded-xl shadow-lg hover:opacity-90 transition-opacity">
-                    <i data-lucide="log-in" class="w-5 h-5"></i>
-                    <span>دخول المنصة</span>
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                    <span>تأكيد الهوية ودخول المنصة</span>
                 </button>
             </div>
             <p class="mt-8 text-xs text-center text-gray-500">تم التطوير بواسطة المهندس أدهم حسين © 2026</p>
         </div>
     </div>
 
-    <!-- 2. لوحة تحكم الأدمن (Admin Dashboard) -->
     <div id="admin-view" class="hidden min-h-screen p-4 md:p-8">
         <div class="max-w-5xl mx-auto">
             <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
                 <div class="flex items-center gap-3">
                     <div class="p-3 bg-[#FF4D6D] bg-opacity-20 rounded-xl text-[#FF4D6D]"><i data-lucide="sliders" class="w-7 h-7"></i></div>
                     <div>
-                        <h1 class="text-2xl font-bold">لوحة تحكم الأدمن/ <span id="admin-name"></span></h1>
+                        <h1 class="text-2xl font-bold">لوحة تحكم الأدمن/ <span id="admin-name"></span> 👑</h1>
                         <p class="text-sm text-gray-400">إدارة المنصة، صناعة الامتحانات، ومتابعة النتائج</p>
                     </div>
                 </div>
                 <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all text-sm"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
             </div>
 
-            <!-- إحصائيات الأدمن -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] flex items-center justify-between">
                     <div>
@@ -82,7 +86,6 @@
                 </div>
             </div>
 
-            <!-- صانع الأسئلة السريع -->
             <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
                 <h2 class="text-lg font-bold mb-4 text-[#48CAE4]">صناعة ونشر امتحان جديد سريعاُ</h2>
                 <div class="space-y-4">
@@ -93,7 +96,7 @@
                         <p class="text-sm font-medium text-gray-300">أضف سؤالاً اختيار من متعدد:</p>
                         <input id="q-text" type="text" placeholder="نص السؤال..." class="w-full px-4 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-sm focus:outline-none">
                         <div class="grid grid-cols-2 gap-2">
-                            <input id="opt-1" type="text" placeholder="الافتيار الأول (الصحيح)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
+                            <input id="opt-1" type="text" placeholder="الاختيار الأول (الصحيح)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
                             <input id="opt-2" type="text" placeholder="الاختيار الثاني" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
                             <input id="opt-3" type="text" placeholder="الاختيار الثالث" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
                             <input id="opt-4" type="text" placeholder="الاختيار الرابع" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
@@ -106,7 +109,6 @@
                 </div>
             </div>
 
-            <!-- جدول النتائج المضافة -->
             <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B]">
                 <h2 class="text-lg font-bold mb-4">جدول درجات الطلاب</h2>
                 <div id="admin-results-list" class="space-y-2 text-sm text-gray-400">لا توجد نتائج مسجلة حتى الآن.</div>
@@ -114,7 +116,6 @@
         </div>
     </div>
 
-    <!-- 3. لوحة تحكم الطالب والامتحانات (Student Dashboard) -->
     <div id="student-view" class="hidden min-h-screen p-4 md:p-8">
         <div class="max-w-4xl mx-auto">
             <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
@@ -128,32 +129,29 @@
                 <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all text-sm"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
             </div>
 
-            <!-- قائمة الامتحانات المتاحة للطالب -->
             <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
                 <h2 class="text-lg font-bold mb-4 text-[#48CAE4]">الامتحانات المتاحة لك</h2>
-                <div id="student-exams-list" class="space-y-4">
-                    <!-- هيتم حقنها بالجافاسكريبت -->
-                </div>
+                <div id="student-exams-list" class="space-y-4"></div>
             </div>
 
-            <!-- شاشة الامتحان النشط -->
             <div id="active-exam-container" class="hidden bg-[#1C2541] p-6 rounded-2xl border border-[#FF4D6D] border-opacity-50 space-y-4">
                 <div class="flex justify-between items-center border-b border-[#3A506B] pb-3">
                     <h3 id="active-exam-title" class="text-lg font-bold text-white">عنوان الامتحان</h3>
                     <div class="text-red-400 text-sm font-bold flex items-center gap-1"><i data-lucide="timer" class="w-4 h-4"></i><span id="exam-timer">15:00</span></div>
                 </div>
-                <div id="active-exam-questions" class="space-y-6 pt-2">
-                    <!-- الأسئلة بتظهر هنا -->
-                </div>
+                <div id="active-exam-questions" class="space-y-6 pt-2"></div>
                 <button onclick="submitExamAnswers()" class="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl shadow">إنهاء الامتحان وإرسال الإجابات للتصحيح 🏁</button>
             </div>
         </div>
     </div>
 
-    <!-- كود المحرك وتشغيل السيستم بالكامل بالـ JavaScript المضمون -->
     <script>
         let currentRole = 'STUDENT';
         let user = null;
+        
+        // كود الـ OTP السري الخاص بك (تقدر تغير الـ 2026 لأي رقم سري تحبه)
+        const ADMIN_SECRET_OTP = "2026"; 
+
         let exams = JSON.parse(localStorage.getItem('exams')) || [
             {
                 id: 'exam_demo',
@@ -173,27 +171,42 @@
             currentRole = role;
             const btnStudent = document.getElementById('btn-student');
             const btnAdmin = document.getElementById('btn-admin');
+            const otpArea = document.getElementById('otp-area');
+            
             if(role === 'STUDENT') {
                 btnStudent.className = "py-3 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]";
                 btnAdmin.className = "py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+                otpArea.classList.add('hidden'); // إخفاء حقل الحماية عن الطلاب
             } else {
                 btnAdmin.className = "py-3 rounded-xl font-medium border transition-all bg-[#FF4D6D] text-white border-[#FF4D6D]";
                 btnStudent.className = "py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+                otpArea.classList.remove('hidden'); // إظهار حقل الحماية فوراً عند اختيار أدمن
             }
+            lucide.createIcons();
         }
 
         function handleLogin() {
             const nameInput = document.getElementById('username').value.trim();
+            const otpInput = document.getElementById('otp-code').value.trim();
             const errorDiv = document.getElementById('login-error');
             const errorText = document.getElementById('error-text');
 
             if(!nameInput) {
-                errorText.innerText = "من فضلك اكتب اسمك أولاً";
+                errorText.innerText = "من فضلك اكتب اسم المستخدم أولاً";
                 errorDiv.classList.remove('hidden');
                 return;
             }
-            errorDiv.classList.add('hidden');
 
+            // نظام تحقق الأمان للأدمن
+            if(currentRole === 'ADMIN') {
+                if(otpInput !== ADMIN_SECRET_OTP) {
+                    errorText.innerText = "عذراً! كود الـ OTP السري غير صحيح، لا يمكن فتح لوحة الأدمن.";
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+            }
+
+            errorDiv.classList.add('hidden');
             user = { name: nameInput, role: currentRole };
             document.getElementById('login-view').classList.add('hidden');
 
@@ -296,7 +309,7 @@
             lucide.createIcons();
         }
 
-        fnction startExam(examId) {
+        function startExam(examId) {
             activeExam = exams.find(e => e.id === examId);
             document.getElementById('active-exam-container').classList.remove('hidden');
             document.getElementById('active-exam-title').innerText = activeExam.title;
@@ -363,7 +376,9 @@
             document.getElementById('student-view').classList.add('hidden');
             document.getElementById('active-exam-container').classList.add('hidden');
             document.getElementById('username').value = '';
+            document.getElementById('otp-code').value = '';
             document.getElementById('login-view').classList.remove('hidden');
+            setRole('STUDENT');
         }
 
         lucide.createIcons();

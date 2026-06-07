@@ -132,3 +132,25 @@
     </script>
 </body>
 </html>
+function setRole(role) {
+    currentRole = role;
+    const btnStudent = document.getElementById('btn-student');
+    const btnAdmin = document.getElementById('btn-admin');
+    const phoneArea = document.getElementById('phone-area');
+    const otpArea = document.getElementById('otp-area');
+    const nameLabel = document.getElementById('name-label');
+    
+    if(role === 'STUDENT') {
+        btnStudent.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]";
+        btnAdmin.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+        phoneArea.classList.remove('hidden'); otpArea.classList.add('hidden');
+        nameLabel.innerText = "اسم الطالب بالكامل";
+    } else {
+        btnAdmin.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#FF4D6D] text-white border-[#FF4D6D]";
+        btnStudent.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+        phoneArea.classList.add('hidden'); otpArea.classList.remove('hidden');
+        nameLabel.innerText = "اسم الأدمن (أدهم)";
+    }
+    // السطر ده مهم جداً عشان يربط الاختيار بملف app.js الموديول
+    window.currentRole = role; 
+}

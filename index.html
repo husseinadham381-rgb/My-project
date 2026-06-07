@@ -67,7 +67,7 @@
                     <div class="p-3 bg-[#FF4D6D] bg-opacity-20 rounded-xl text-[#FF4D6D]"><i data-lucide="sliders" class="w-7 h-7"></i></div>
                     <div>
                         <h1 class="text-xl font-bold">لوحة تحكم الملك أدهم حسين 👑</h1>
-                        <p class="text-xs text-gray-400">إدارة الامتحانات، المحاضرات، المذكرات، وتحميل الداتا بدون تكرار</p>
+                        <p class="text-xs text-gray-400">إدارة الامتحانات، روابط المحاضرات، وملفات الـ PDF التعليمية</p>
                     </div>
                 </div>
                 <button onclick="logout()" class="flex items-center gap-1 px-3 py-1.5 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white text-xs transition-all"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
@@ -117,19 +117,19 @@
                     </div>
                 </div>
 
-                <!-- إضافة محاضرة أو مذكرة -->
+                <!-- إضافة محاضرة أو مذكرة/كتاب PDF -->
                 <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
-                    <h2 class="text-md font-bold mb-3 text-[#48CAE4] flex items-center gap-1"><i data-lucide="video" class="w-4 h-4"></i><span>إضافة محاضرة أو ملخص للطلاب</span></h2>
+                    <h2 class="text-md font-bold mb-3 text-[#48CAE4] flex items-center gap-1"><i data-lucide="video" class="w-4 h-4"></i><span>إضافة محاضرة أو كتاب PDF</span></h2>
                     <div class="space-y-3">
-                        <select id="resource-type" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs">
-                            <option value="LECTURE">📺 محاضرة فيديو شرح</option>
-                            <option value="NOTE">📄 مذكرات وملخصات PDF</option>
+                        <select id="resource-type" onchange="toggleResourcePlaceholders()" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs">
+                            <option value="LECTURE">📺 محاضرة (لينك فيديو شرح)</option>
+                            <option value="NOTE">📄 مذكرات وكتب (ملف PDF مباشر)</option>
                         </select>
                         <select id="resource-subject" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs">
                             <option value="لغة عربية">اللغة العربية</option><option value="إنجليزي">اللغة الإنجليزية</option><option value="ألماني">اللغة الألمانية</option><option value="فيزياء">الفيزياء</option><option value="كيمياء">الكيمياء</option><option value="أحياء">الأحياء</option><option value="جيولوجيا">الجيولوجيا</option>
                         </select>
-                        <input id="resource-title" type="text" placeholder="عنوان المحاضرة أو المذكرة" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-right">
-                        <input id="resource-url" type="text" placeholder="رابط الفيديو أو رابط الـ PDF" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-center font-mono">
+                        <input id="resource-title" type="text" placeholder="عنوان المحاضرة أو اسم الكتاب" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-right">
+                        <input id="resource-url" type="text" placeholder="ضع رابط الفيديو هنا (يوتيوب مثلاً)" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-center font-mono">
                         <button onclick="publishResource()" class="w-full py-2 bg-gradient-to-r from-purple-500 to-indigo-600 font-bold text-xs rounded-lg shadow">رفع ونشر الملف فوراً ✨</button>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                 <button onclick="logout()" class="px-3 py-1.5 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 text-xs hover:bg-red-600 hover:text-white transition-all"><i data-lucide="log-out" class="w-4 h-4"></i></button>
             </div>
 
-            <!-- خطوة 1: اختيار المادة أولاً -->
+            <!-- اختيار المادة أولاً -->
             <div id="subject-selection-zone" class="mb-8">
                 <h2 class="text-md font-bold text-gray-300 mb-4 flex items-center gap-2"><i data-lucide="book-open" class="text-[#48CAE4]"></i><span>اختر المادة الدراسية لفتح المحتوى:</span></h2>
                 <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
@@ -196,7 +196,7 @@
                 </div>
             </div>
 
-            <!-- خطوة 2: الأقسام الـ 3 تظهر هنا ديناميكياً بعد اختيار المادة -->
+            <!-- الأقسام تظهر بعد اختيار المادة -->
             <div id="content-zone" class="hidden space-y-6">
                 <div class="flex items-center justify-between border-b border-[#3A506B] pb-2">
                     <h3 class="text-md font-bold text-[#48CAE4] flex items-center gap-1">👉 محتويات مادة: <span id="current-selected-subject-title" class="text-white underline"></span></h3>
@@ -206,13 +206,13 @@
                 <div class="grid grid-cols-1 gap-6">
                     <!-- قسم المحاضرات المرئية -->
                     <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
-                        <h2 class="text-sm font-bold text-[#48CAE4] mb-3 flex items-center gap-1 pb-2 border-b border-[#3A506B] border-opacity-20"><i data-lucide="tv"></i><span>📺 محاضرات الشرح والفيديو</span></h2>
+                        <h2 class="text-sm font-bold text-[#48CAE4] mb-3 flex items-center gap-1 pb-2 border-b border-[#3A506B] border-opacity-20"><i data-lucide="tv"></i><span>📺 قسم روابط ومحاضرات الشرح</span></h2>
                         <div id="student-lectures-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                     </div>
 
-                    <!-- قسم الملخصات والمذكرات -->
+                    <!-- قسم الملخصات والمكتبة الـ PDF -->
                     <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
-                        <h2 class="text-sm font-bold text-indigo-400 mb-3 flex items-center gap-1 pb-2 border-b border-[#3A506B] border-opacity-20"><i data-lucide="file-text"></i><span>📄 المذكرات والملخصات PDF</span></h2>
+                        <h2 class="text-sm font-bold text-indigo-400 mb-3 flex items-center gap-1 pb-2 border-b border-[#3A506B] border-opacity-20"><i data-lucide="file-text"></i><span>📄 قسم الكتب والمذكرات بصيغة PDF المباشرة</span></h2>
                         <div id="student-notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                     </div>
 
@@ -242,23 +242,29 @@
         </div>
     </div>
 
-    <!-- كود المحرك وتشغيل السيستم بالكامل بالـ JavaScript -->
     <script>
         let currentRole = 'STUDENT';
         let user = null;
         let selectedSubject = null;
         const ADMIN_SECRET_OTP = "2026"; 
 
-        // داتا مخزنة تلقائياً
         let exams = JSON.parse(localStorage.getItem('exams')) || [];
         let resources = JSON.parse(localStorage.getItem('resources')) || [];
-        
-        // هيكل الداتا الجديد لنتائج الطلاب يعتمد على رقم التليفون كـ Unique Key لمنع التكرار
         let studentsDatabase = JSON.parse(localStorage.getItem('studentsDatabase')) || {};
         
         let currentTempQuestions = [];
         let activeExam = null;
         let timerInterval = null;
+
+        function toggleResourcePlaceholders() {
+            const type = document.getElementById('resource-type').value;
+            const urlInput = document.getElementById('resource-url');
+            if(type === 'LECTURE') {
+                urlInput.placeholder = "ضع رابط الفيديو هنا (يوتيوب مثلاً)";
+            } else {
+                urlInput.placeholder = "ضع رابط ملف الـ PDF المباشر هنا";
+            }
+        }
 
         function shuffleArray(array) {
             let shuffled = [...array];
@@ -319,11 +325,9 @@
             document.getElementById('admin-view').classList.remove('hidden');
             document.getElementById('admin-total-count').innerText = exams.length + resources.length;
             
-            // حساب عدد الطلاب الفريدين في السيستم
             const uniqueStudentsCount = Object.keys(studentsDatabase).length;
             document.getElementById('admin-results-count').innerText = uniqueStudentsCount;
             
-            // 1. بناء جدول رصد الدرجات المنظم (بدون أي تكرار لاسم الطالب)
             const tableBody = document.getElementById('admin-table-body');
             let tableHtml = '';
             
@@ -348,7 +352,6 @@
             }
             tableBody.innerHTML = tableHtml;
 
-            // 2. جدول الحذف والإدارة للمحتوى المرفوع
             const mgmtBody = document.getElementById('admin-management-body');
             let mgmtHtml = '';
             
@@ -362,11 +365,12 @@
             resources.forEach(r => {
                 mgmtHtml += `
                     <tr class="border-b border-[#3A506B] border-opacity-30">
-                        <td class="p-2 ${r.type === 'LECTURE'?'text-blue-400':'text-indigo-400'} font-bold">${r.type === 'LECTURE'?'📺 محاضرة':'📄 مذكرة'}</td><td class="p-2 text-gray-400">${r.subject}</td><td class="p-2">${r.title}</td>
+                        <td class="p-2 ${r.type === 'LECTURE'?'text-blue-400':'text-indigo-400'} font-bold">${r.type === 'LECTURE'?'📺 محاضرة':'📄 كتاب PDF'}</td><td class="p-2 text-gray-400">${r.subject}</td><td class="p-2">${r.title}</td>
                         <td class="p-2 text-left"><button onclick="deleteItem('RESOURCE', '${r.id}')" class="text-red-400 hover:text-red-600 font-bold">مسح فوري</button></td>
                     </tr>`;
             });
             mgmtBody.innerHTML = mgmtHtml === '' ? `<tr><td colspan="4" class="p-2 text-center text-gray-500">لا يوجد محتوى مرفوع حالياً.</td></tr>` : mgmtHtml;
+            toggleResourcePlaceholders();
             lucide.createIcons();
         }
 
@@ -431,11 +435,9 @@
             resetSubjectSelection(); 
         }
 
-        // دالة تفعيل واختيار المادة المحددة وتلوين الزرار وعرض الأقسام الخاصة بيها بس
         function selectSubject(subjectName) {
             selectedSubject = subjectName;
             
-            // تلوين الزرار المختار
             const buttons = document.querySelectorAll('.subject-btn');
             buttons.forEach(btn => {
                 if(btn.innerText.includes(subjectName)) {
@@ -448,29 +450,32 @@
             document.getElementById('current-selected-subject-title').innerText = subjectName;
             document.getElementById('content-zone').classList.remove('hidden');
 
-            // 1. فلترة المحاضرات للمادة المختارة فقط
+            // 1. فلترة المحاضرات
             const lecList = document.getElementById('student-lectures-list');
             const lecs = resources.filter(r => r.type === 'LECTURE' && r.subject === subjectName);
             lecList.innerHTML = lecs.length === 0 ? `<p class="text-xs text-gray-500">لا توجد محاضرات فيديو لـ ${subjectName} حالياً.</p>` : 
                 lecs.map(l => `
                     <div class="p-3 bg-[#0B132B] rounded-lg border border-[#3A506B] flex justify-between items-center text-xs">
                         <p class="font-bold text-white">${l.title}</p>
-                        <a href="${l.url}" target="_blank" class="px-3 py-1 bg-blue-600 text-white font-bold rounded hover:bg-opacity-90">📺 تشغيل الفيديو</a>
+                        <a href="${l.url}" target="_blank" class="px-3 py-1 bg-blue-600 text-white font-bold rounded hover:bg-opacity-90">📺 فتح رابط المحاضرة</a>
                     </div>
                 `).join('');
 
-            // 2. فلترة المذكرات للمادة المختارة فقط
+            // 2. فلترة المذكرات والكتب (تظهر بصيغة PDF واضحة)
             const noteList = document.getElementById('student-notes-list');
             const notes = resources.filter(r => r.type === 'NOTE' && r.subject === subjectName);
-            noteList.innerHTML = notes.length === 0 ? `<p class="text-xs text-gray-500">لا توجد مذكرات PDF لـ ${subjectName} حالياً.</p>` : 
+            noteList.innerHTML = notes.length === 0 ? `<p class="text-xs text-gray-500">لا توجد كتب أو مذكرات PDF لـ ${subjectName} حالياً.</p>` : 
                 notes.map(n => `
                     <div class="p-3 bg-[#0B132B] rounded-lg border border-[#3A506B] flex justify-between items-center text-xs">
                         <p class="font-bold text-white">${n.title}</p>
-                        <a href="${n.url}" target="_blank" class="px-3 py-1 bg-indigo-600 text-white font-bold rounded hover:bg-opacity-90">📄 تحميل الـ PDF</a>
+                        <a href="${n.url}" target="_blank" class="px-3 py-1 bg-indigo-600 text-white font-bold rounded hover:bg-opacity-90 flex items-center gap-1">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            <span>📄 عرض وتحميل كتاب PDF</span>
+                        </a>
                     </div>
                 `).join('');
 
-            // 3. فلترة الامتحانات للمادة المختارة فقط
+            // 3. فلترة الامتحانات
             const examsList = document.getElementById('student-exams-list');
             const subExams = exams.filter(e => e.subject === subjectName);
             examsList.innerHTML = subExams.length === 0 ? `<p class="text-xs text-gray-500">لا توجد امتحانات منشورة لـ ${subjectName} حالياً.</p>` : 
@@ -536,16 +541,10 @@
                 if(selected && selected.value === q.correctAnswer) score++;
             });
 
-            // آلية منع التكرار الذكية الفخمة:
-            // إذا كان الطالب (بناء على رقم تليفونه) مش موجود، بننشئ له سجل جديد
             if (!studentsDatabase[user.phone]) {
-                studentsDatabase[user.phone] = {
-                    name: user.name,
-                    completedExams: []
-                };
+                studentsDatabase[user.phone] = { name: user.name, completedExams: [] };
             }
             
-            // بنضيف الامتحان الجديد لليستة امتحاناته جوه نفس الحساب الفريد
             studentsDatabase[user.phone].completedExams.push({
                 subject: activeExam.subject,
                 examTitle: activeExam.title,
@@ -553,7 +552,6 @@
                 total: activeExam.questions.length
             });
 
-            // حفظ في الـ LocalStorage
             localStorage.setItem('studentsDatabase', JSON.stringify(studentsDatabase));
             document.getElementById('active-exam-container').classList.add('hidden');
             
@@ -562,13 +560,11 @@
             if(selectedSubject) selectSubject(selectedSubject);
         }
 
-        // دالة تحميل شيت الإكسيل الاحترافية المحدثة لمنع السطور المكررة
         function downloadExcel() {
             const phones = Object.keys(studentsDatabase);
             if(phones.length === 0) { alert('لا توجد داتا طلاب لتحميلها'); return; }
             
             let csvContent = "\ufeffاسم الطالب,رقم التليفون,المادة المرصودة,الامتحان حل كام,النتيجة\n";
-            
             for (const phone in studentsDatabase) {
                 const st = studentsDatabase[phone];
                 if (st.completedExams.length === 0) {

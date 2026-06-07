@@ -4,63 +4,384 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة أَدْهَم التعليمية</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0B132B;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
-        .container {
-            background-color: #1C2541;
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid #3A506B;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-w: 500px;
-            width: 90%;
-        }
-        h1 {
-            color: #48CAE4;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #A5A5A5;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-        }
-        .badge {
-            background-color: rgba(72, 202, 228, 0.2);
-            color: #48CAE4;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        .footer {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: #5C677D;
-        }
-    </style>
+    <!-- استدعاء Tailwind CSS السريع لتنسيق الألوان والأشكال -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استدعاء أيقونات Lucide الفخمة -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body class="bg-[#0B132B] text-white font-sans min-h-screen">
 
-    <div class="container">
-        <h1>منصة أَدْهَم</h1>
-        <p>النظام الذكي لإدارة الامتحانات والتقييم الفوري</p>
-        <span class="badge">الموقع قيد التجهيز والنشر اللايف</span>
-        <div class="footer">
-            تم التطوير بواسطة المهندس أدهم حسين © 2026
+    <!-- 1. شاشة تسجيل الدخول -->
+    <div id="login-view" class="flex flex-col items-center justify-center min-h-screen p-4">
+        <div class="w-full max-w-md p-8 rounded-2xl bg-[#1C2541] border border-[#3A506B] shadow-2xl">
+            <div class="flex flex-col items-center mb-8 text-center">
+                <div class="p-4 bg-[#48CAE4] bg-opacity-20 rounded-full mb-3 text-[#48CAE4]">
+                    <i data-lucide="graduation-cap" class="w-10 h-10"></i>
+                </div>
+                <h1 class="text-3xl font-bold tracking-wide">منصة أَدْهَم</h1>
+                <p class="mt-2 text-sm text-gray-400">نظام إدارة الامتحانات والتقييم الذكي</p>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-300">اسم المستخدم</label>
+                    <input id="username" type="text" placeholder="اكتب اسمك الثلاثي هنا..." class="w-full px-4 py-3 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-right">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-300">نوع الحساب (الصلاحية)</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="setRole('STUDENT')" id="btn-student" class="py-3 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]">طالب عام</button>
+                        <button onclick="setRole('ADMIN')" id="btn-admin" class="py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500">معلم / مدير</button>
+                    </div>
+                </div>
+
+                <div id="login-error" class="hidden flex items-center gap-2 p-3 text-sm text-[#FF4D6D] bg-[#FF4D6D] bg-opacity-10 border border-[#FF4D6D] rounded-xl">
+                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                    <span id="error-text"></span>
+                </div>
+
+                <button onclick="handleLogin()" class="flex items-center justify-center w-full gap-2 py-3.5 bg-gradient-to-r from-[#48CAE4] to-[#00B4D8] text-[#0B132B] font-bold rounded-xl shadow-lg hover:opacity-90 transition-opacity">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    <span>دخول المنصة</span>
+                </button>
+            </div>
+            <p class="mt-8 text-xs text-center text-gray-500">تم التطوير بواسطة المهندس أدهم حسين © 2026</p>
         </div>
     </div>
 
+    <!-- 2. لوحة تحكم المعلم (Admin Dashboard) -->
+    <div id="admin-view" class="hidden min-h-screen p-4 md:p-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-[#FF4D6D] bg-opacity-20 rounded-xl text-[#FF4D6D]"><i data-lucide="book-open" class="w-7 h-7"></i></div>
+                    <div>
+                        <h1 class="text-2xl font-bold">أهلاً بك يا أستاذ/ <span id="admin-name"></span></h1>
+                        <p class="text-sm text-gray-400">لوحة تحكم المعلم وإدارة الامتحانات</p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all text-sm"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
+            </div>
+
+            <!-- إحصائيات المدرس -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">إجمالي الامتحانات المنشورة</p>
+                        <h3 id="admin-exams-count" class="text-3xl font-bold mt-2">0</h3>
+                    </div>
+                    <div class="p-4 bg-[#48CAE4] bg-opacity-10 text-[#48CAE4] rounded-2xl"><i data-lucide="clipboard-list" class="w-8 h-8"></i></div>
+                </div>
+                <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">عدد الطلاب الذين امتحنوا</p>
+                        <h3 id="admin-results-count" class="text-3xl font-bold mt-2">0</h3>
+                    </div>
+                    <div class="p-4 bg-[#48CAE4] bg-opacity-10 text-[#48CAE4] rounded-2xl"><i data-lucide="users" class="w-8 h-8"></i></div>
+                </div>
+            </div>
+
+            <!-- صانع الأسئلة السريع -->
+            <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
+                <h2 class="text-lg font-bold mb-4 text-[#48CAE4]">صناعة ونشر امتحان جديد سريعاُ</h2>
+                <div class="space-y-4">
+                    <input id="exam-title" type="text" placeholder="عنوان الامتحان (مثال: اختبار أحياء - الباب الأول)" class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white text-right focus:outline-none">
+                    <input id="exam-duration" type="number" placeholder="مدة الامتحان بالدقائق (مثال: 15)" class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white text-right focus:outline-none">
+                    
+                    <div class="p-4 bg-[#0B132B] rounded-xl border border-[#3A506B] space-y-3">
+                        <p class="text-sm font-medium text-gray-300">أضف سؤالاً اختيار من متعدد:</p>
+                        <input id="q-text" type="text" placeholder="نص السؤال..." class="w-full px-4 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-sm focus:outline-none">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input id="opt-1" type="text" placeholder="الاختيار الأول (الصحيح)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
+                            <input id="opt-2" type="text" placeholder="الاختيار الثاني" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
+                            <input id="opt-3" type="text" placeholder="الاختيار الثالث" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
+                            <input id="opt-4" type="text" placeholder="الاختيار الرابع" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
+                        </div>
+                        <button onclick="addQuestionToList()" class="px-4 py-2 bg-[#3A506B] text-white text-xs rounded-lg hover:bg-opacity-80">حفظ السؤال جوه القائمة</button>
+                    </div>
+
+                    <div id="temp-questions-count" class="text-xs text-gray-400">الأسئلة المجهزة حالياً: 0 أسئلة</div>
+                    <button onclick="publishExam()" class="w-full py-3 bg-[#48CAE4] text-[#0B132B] font-bold rounded-xl shadow">نشر الامتحان للطلاب فوراً 🚀</button>
+                </div>
+            </div>
+
+            <!-- جدول النتائج المضافة -->
+            <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B]">
+                <h2 class="text-lg font-bold mb-4">جدول درجات الطلاب</h2>
+                <div id="admin-results-list" class="space-y-2 text-sm text-gray-400">لا توجد نتائج مسجلة حتى الآن.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. لوحة تحكم الطالب والامتحانات (Student Dashboard) -->
+    <div id="student-view" class="hidden min-h-screen p-4 md:p-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-[#48CAE4] bg-opacity-20 rounded-xl text-[#48CAE4]"><i data-lucide="user" class="w-7 h-7"></i></div>
+                    <div>
+                        <h1 class="text-2xl font-bold">أهلاً بك يا بطل/ <span id="student-name"></span></h1>
+                        <p class="text-sm text-gray-400">ابدأ امتحاناتك وتابع تقييمك فوراً</p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all text-sm"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
+            </div>
+
+            <!-- قائمة الامتحانات المتاحة للطالب -->
+            <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
+                <h2 class="text-lg font-bold mb-4 text-[#48CAE4]">الامتحانات المتاحة لك</h2>
+                <div id="student-exams-list" class="space-y-4">
+                    <!-- هيتم حقنها بالجافاسكريبت -->
+                </div>
+            </div>
+
+            <!-- شاشة الامتحان النشط -->
+            <div id="active-exam-container" class="hidden bg-[#1C2541] p-6 rounded-2xl border border-[#FF4D6D] border-opacity-50 space-y-4">
+                <div class="flex justify-between items-center border-b border-[#3A506B] pb-3">
+                    <h3 id="active-exam-title" class="text-lg font-bold text-white">عنوان الامتحان</h3>
+                    <div class="text-red-400 text-sm font-bold flex items-center gap-1"><i data-lucide="timer" class="w-4 h-4"></i><span id="exam-timer">15:00</span></div>
+                </div>
+                <div id="active-exam-questions" class="space-y-6 pt-2">
+                    <!-- الأسئلة بتظهر هنا -->
+                </div>
+                <button onclick="submitExamAnswers()" class="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl shadow">إنهاء الامتحان وإرسال الإجابات للتصحيح 🏁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- كود المحرك وتشغيل السيستم بالكامل بالـ JavaScript المضمون -->
+    <script>
+        // قاعدة البيانات المحلية في المتصفح لتخزين البيانات منعاً للضياع عند عمل ريفريش
+        let currentRole = 'STUDENT';
+        let user = null;
+        let exams = JSON.parse(localStorage.getItem('exams')) || [
+            {
+                id: 'exam_demo',
+                title: 'اختبار تجريبي ترحيبي في منصة أدهم',
+                duration: 10,
+                questions: [
+                    { id: 'q1', text: 'ما هو المكون الأساسي لبرمجة واجهات الويب؟', options: ['HTML', 'Python', 'C++', 'Java'], correctAnswer: 'HTML' }
+                ]
+            }
+        ];
+        let results = JSON.parse(localStorage.getItem('results')) || [];
+        let currentTempQuestions = [];
+        let activeExam = null;
+        let timerInterval = null;
+
+        // دالة تحديد الصلاحية في شاشة اللوجن
+        function setRole(role) {
+            currentRole = role;
+            const btnStudent = document.getElementById('btn-student');
+            const btnAdmin = document.getElementById('btn-admin');
+            if(role === 'STUDENT') {
+                btnStudent.className = "py-3 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]";
+                btnAdmin.className = "py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+            } else {
+                btnAdmin.className = "py-3 rounded-xl font-medium border transition-all bg-[#FF4D6D] text-white border-[#FF4D6D]";
+                btnStudent.className = "py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+            }
+        }
+
+        // دالة تسجيل الدخول والتوجيه للوحة المناسبة
+        function handleLogin() {
+            const nameInput = document.getElementById('username').value.trim();
+            const errorDiv = document.getElementById('login-error');
+            const errorText = document.getElementById('error-text');
+
+            if(!nameInput) {
+                errorText.innerText = "من فضلك اكتب اسمك الثلاثي أولاً";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            errorDiv.classList.add('hidden');
+
+            user = { name: nameInput, role: currentRole };
+            document.getElementById('login-view').classList.add('hidden');
+
+            if(user.role === 'ADMIN') {
+                showAdminDashboard();
+            } else {
+                showStudentDashboard();
+            }
+        }
+
+        // لوحة تحكم المعلم
+        function showAdminDashboard() {
+            document.getElementById('admin-view').classList.remove('hidden');
+            document.getElementById('admin-name').innerText = user.name;
+            document.getElementById('admin-exams-count').innerText = exams.length;
+            document.getElementById('admin-results-count').innerText = results.length;
+            
+            // رندر جدول الدرجات والنتائج
+            const resultsList = document.getElementById('admin-results-list');
+            if(results.length === 0) {
+                resultsList.innerHTML = "لا توجد نتائج مسجلة حتى الآن.";
+            } else {
+                resultsList.innerHTML = results.map(r => `
+                    <div class="flex justify-between items-center p-3 bg-[#0B132B] rounded-xl border border-[#3A506B]">
+                        <span class="text-white font-bold">${r.studentName}</span>
+                        <span class="text-gray-400 text-xs">${r.examTitle}</span>
+                        <span class="text-[#48CAE4] font-bold">الدرجة: ${r.score} من ${r.total}</span>
+                    </div>
+                `).join('');
+            }
+            lucide.createIcons();
+        }
+
+        // تجميع أسئلة الامتحان الجديد في قائمة مؤقتة
+        function addQuestionToList() {
+            const text = document.getElementById('q-text').value.trim();
+            const opt1 = document.getElementById('opt-1').value.trim();
+            const opt2 = document.getElementById('opt-2').value.trim();
+            const opt3 = document.getElementById('opt-3').value.trim();
+            const opt4 = document.getElementById('opt-4').value.trim();
+
+            if(!text || !opt1 || !opt2) {
+                alert('من فضلك اكتب السؤال وحط اختيارين على الأقل (الأول هو الصح)');
+                return;
+            }
+
+            currentTempQuestions.push({
+                id: 'q_' + Math.random().toString(36).substr(2, 9),
+                text: text,
+                options: [opt1, opt2, opt3, opt4].filter(o => o !== ''),
+                correctAnswer: opt1 // دايماً الخيار الأول المكتوب هو الصح لتسهيل الكود
+            });
+
+            document.getElementById('temp-questions-count').innerText = `الأسئلة المجهزة حالياً: ${currentTempQuestions.length} أسئلة`;
+            
+            // تصفية الخانات لسؤال جديد
+            document.getElementById('q-text').value = '';
+            document.getElementById('opt-1').value = '';
+            document.getElementById('opt-2').value = '';
+            document.getElementById('opt-3').value = '';
+            document.getElementById('opt-4').value = '';
+        }
+
+        // نشر الامتحان وحفظه في الـ LocalStorage للابد
+        function publishExam() {
+            const title = document.getElementById('exam-title').value.trim();
+            const duration = document.getElementById('exam-duration').value.trim();
+
+            if(!title || currentTempQuestions.length === 0) {
+                alert('اكتب عنوان الامتحان وأضف سؤالاً واحداً على الأقل للمنصة');
+                return;
+            }
+
+            exams.push({
+                id: 'exam_' + Math.random().toString(36).substr(2, 9),
+                title: title,
+                duration: Number(duration) || 15,
+                questions: currentTempQuestions
+            });
+
+            localStorage.setItem('exams', JSON.stringify(exams));
+            currentTempQuestions = [];
+            document.getElementById('exam-title').value = '';
+            document.getElementById('exam-duration').value = '';
+            document.getElementById('temp-questions-count').innerText = `الأسئلة المجهزة حالياً: 0 أسئلة`;
+            
+            showAdminDashboard();
+            alert('تم نشر الامتحان لايف بنجاح والطلاب يقدروا يفتحوه حالا! 🚀');
+        }
+
+        // لوحة تحكم الطالب
+        function showStudentDashboard() {
+            document.getElementById('student-view').classList.remove('hidden');
+            document.getElementById('student-name').innerText = user.name;
+            
+            const examsList = document.getElementById('student-exams-list');
+            examsList.innerHTML = exams.map(e => `
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-[#0B132B] rounded-xl border border-[#3A506B] gap-4">
+                    <div>
+                        <h4 class="font-bold text-white">${e.title}</h4>
+                        <p class="text-xs text-gray-400 mt-1">المدة: ${e.duration} دقائق | عدد الأسئلة: ${e.questions.length}</p>
+                    </div>
+                    <button onclick="startExam('${e.id}')" class="px-5 py-2 bg-[#48CAE4] text-[#0B132B] font-bold rounded-xl text-xs shadow hover:opacity-90">ابدأ الآن 📝</button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // بدء المؤقت والامتحان للطالب
+        function startExam(examId) {
+            activeExam = exams.find(e => e.id === examId);
+            document.getElementById('active-exam-container').classList.remove('hidden');
+            document.getElementById('active-exam-title').innerText = activeExam.title;
+            
+            // رندر الأسئلة
+            const qContainer = document.getElementById('active-exam-questions');
+            qContainer.innerHTML = activeExam.questions.map((q, idx) => `
+                <div class="space-y-3 bg-[#0B132B] p-4 rounded-xl border border-[#3A506B]">
+                    <p class="text-sm font-medium text-white"><span class="text-[#48CAE4] font-bold">سؤال ${idx+1}:</span> ${q.text}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${q.options.map(opt => `
+                            <label class="flex items-center gap-2 p-2.5 rounded-lg bg-[#1C2541] border border-[#3A506B] cursor-pointer text-xs hover:border-[#48CAE4]">
+                                <input type="radio" name="ans_${q.id}" value="${opt}" class="accent-[#48CAE4]">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // تشغيل الـ Timer
+            let timeLeft = activeExam.duration * 60;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                let mins = Math.floor(timeLeft / 60);
+                let secs = timeLeft % 60;
+                document.getElementById('exam-timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitExamAnswers();
+                }
+                timeLeft--;
+            }, 1000);
+            lucide.createIcons();
+        }
+
+        // تصحيح الامتحان تلقائياً وحفظ النتيجة فورياً
+        function submitExamAnswers() {
+            clearInterval(timerInterval);
+            let score = 0;
+            
+            activeExam.questions.forEach(q => {
+                const selected = document.querySelector(`input[name="ans_${q.id}"]:checked`);
+                if(selected && selected.value === q.correctAnswer) {
+                    score++;
+                }
+            });
+
+            results.push({
+                studentName: user.name,
+                examTitle: activeExam.title,
+                score: score,
+                total: activeExam.questions.length
+            });
+
+            localStorage.setItem('results', JSON.stringify(results));
+            document.getElementById('active-exam-container').classList.add('hidden');
+            alert(`الحمدلله أتممت الامتحان بنجاح يا بطل! 🎉\nدرجتك هي: ${score} من ${activeExam.questions.length}\nتم إرسال درجتك فوراً للأستاذ.`);
+            activeExam = null;
+            showStudentDashboard();
+        }
+
+        // تسجيل الخروج والعودة للوجن
+        function logout() {
+            user = null;
+            clearInterval(timerInterval);
+            document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById('student-view').classList.add('hidden');
+            document.getElementById('active-exam-container').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('login-view').classList.remove('hidden');
+        }
+
+        // تهيئة الأيقونات عند أول فتح للموقع
+        lucide.createIcons();
+    </script>
 </body>
 </html>

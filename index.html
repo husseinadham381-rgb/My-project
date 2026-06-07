@@ -3,245 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة نابغة التعليمية</title>
-    <!-- استدعاء Tailwind CSS للتنسيق السريع والفخم -->
+    <title>منصة نابغة التعليمية المتكاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء أيقونات Lucide الفخمة -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-[#0B132B] text-white font-sans min-h-screen">
+<body class="bg-[#0B132B] text-white font-sans min-h-screen text-right">
 
-    <!-- 1. شاشة تسجيل الدخول المتطورة (اسم + تليفون للطلاب) -->
     <div id="login-view" class="flex flex-col items-center justify-center min-h-screen p-4">
         <div class="w-full max-w-md p-8 rounded-2xl bg-[#1C2541] border border-[#3A506B] shadow-2xl">
-            <div class="flex flex-col items-center mb-8 text-center">
+            <div class="flex flex-col items-center mb-6 text-center">
                 <div class="p-4 bg-[#48CAE4] bg-opacity-20 rounded-full mb-3 text-[#48CAE4]">
-                    <i data-lucide="sparkles" class="w-10 h-10"></i>
+                    <i data-lucide="sparkles" class="w-10 h-10 animate-pulse"></i>
                 </div>
                 <h1 class="text-3xl font-bold tracking-wide">منصة نَابِغَة</h1>
-                <p class="mt-2 text-sm text-gray-400">النظام التعليمي الذكي المتكامل</p>
+                <p class="mt-2 text-sm text-gray-400">النظام التعليمي الذكي المتكامل لتأمين الـ 90% 🎯</p>
             </div>
 
-            <div class="space-y-5">
-                <!-- اختيار الرتبة أولاً لتحديد الخانات المطلوبة -->
+            <div class="space-y-4">
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-300">نوع الحساب (الصلاحية)</label>
-                    <div class="grid grid-cols-2 gap-4">
-                        <button onclick="setRole('STUDENT')" id="btn-student" class="py-3 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]">طالب / طالبة</button>
-                        <button onclick="setRole('ADMIN')" id="btn-admin" class="py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500">الأدمن (أدهم)</button>
+                    <label class="block mb-1.5 text-sm font-medium text-gray-300">نوع الحساب</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="setRole('STUDENT')" id="btn-student" class="py-2.5 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]">طالب / طالبة</button>
+                        <button onclick="setRole('ADMIN')" id="btn-admin" class="py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500">الأدمن (أدهم)</button>
                     </div>
                 </div>
 
-                <!-- خانة الاسم الثنائي أو الثلاثي -->
                 <div>
-                    <label id="name-label" class="block mb-2 text-sm font-medium text-gray-300">اسم الطالب بالكامل</label>
-                    <input id="username" type="text" placeholder="اكتب الاسم هنا..." class="w-full px-4 py-3 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-right">
+                    <label id="name-label" class="block mb-1.5 text-sm font-medium text-gray-300">اسم الطالب بالكامل</label>
+                    <input id="username" type="text" placeholder="اكتب الاسم هنا..." class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-right">
                 </div>
 
-                <!-- خانة رقم التليفون (تظهر للطالب فقط) -->
                 <div id="phone-area">
-                    <label class="block mb-2 text-sm font-medium text-gray-300">رقم تليفونك (واتساب)</label>
-                    <input id="userphone" type="tel" placeholder="01xxxxxxxxx" class="w-full px-4 py-3 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-center font-mono">
+                    <label class="block mb-1.5 text-sm font-medium text-gray-300">رقم الهاتف (واتساب)</label>
+                    <input id="userphone" type="tel" placeholder="01xxxxxxxxx" class="w-full px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-center font-mono">
                 </div>
 
-                <!-- خانة كود التحقق الـ OTP (تظهر للأدمن فقط) -->
                 <div id="otp-area" class="hidden space-y-2 bg-[#0B132B] p-4 rounded-xl border border-[#FF4D6D] border-opacity-30">
-                    <div class="flex items-center gap-2 text-xs text-[#FF4D6D] font-bold mb-1">
-                        <i data-lucide="smartphone" class="w-4 h-4"></i>
-                        <span>كود الحقق مطلوب لفتح لوحة التحكم الملكية.</span>
-                    </div>
                     <label class="block text-sm font-medium text-gray-300">أدخل كود الأدمن السري</label>
-                    <input id="otp-code" type="password" placeholder="••••••" class="w-full px-4 py-3 rounded-xl bg-[#1C2541] border border-[#3A506B] text-white text-center tracking-widest font-bold focus:outline-none focus:border-[#FF4D6D]">
+                    <input id="otp-code" type="password" placeholder="••••••" class="w-full px-4 py-2.5 rounded-xl bg-[#1C2541] border border-[#3A506B] text-white text-center tracking-widest font-bold focus:outline-none focus:border-[#FF4D6D]">
                 </div>
 
-                <!-- رسائل الخطأ -->
                 <div id="login-error" class="hidden flex items-center gap-2 p-3 text-sm text-[#FF4D6D] bg-[#FF4D6D] bg-opacity-10 border border-[#FF4D6D] rounded-xl">
                     <i data-lucide="shield-alert" class="w-5 h-5"></i>
                     <span id="error-text"></span>
                 </div>
 
-                <!-- زر الدخول -->
-                <button onclick="handleLogin()" class="flex items-center justify-center w-full gap-2 py-3.5 bg-gradient-to-r from-[#48CAE4] to-[#00B4D8] text-[#0B132B] font-bold rounded-xl shadow-lg hover:opacity-90 transition-opacity">
-                    <i data-lucide="login" class="w-5 h-5"></i>
+                <button onclick="handleLogin()" class="flex items-center justify-center w-full gap-2 py-3 bg-gradient-to-r from-[#48CAE4] to-[#00B4D8] text-[#0B132B] font-bold rounded-xl shadow-lg hover:opacity-90 transition-opacity">
                     <span>دخول المنصة 🚀</span>
                 </button>
             </div>
-            <p class="mt-8 text-xs text-center text-gray-500">منصة نابغة التعليمية © 2026</p>
         </div>
     </div>
 
-    <!-- 2. لوحة تحكم الأدمن (Admin Dashboard) -->
     <div id="admin-view" class="hidden min-h-screen p-4 md:p-8">
-        <div class="max-w-5xl mx-auto">
-            <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-6">
                 <div class="flex items-center gap-3">
                     <div class="p-3 bg-[#FF4D6D] bg-opacity-20 rounded-xl text-[#FF4D6D]"><i data-lucide="sliders" class="w-7 h-7"></i></div>
                     <div>
-                        <h1 class="text-2xl font-bold">لوحة تحكم الأدمن/ أدهم حسين 👑</h1>
-                        <p class="text-sm text-gray-400">إدارة المواد، صناعة الاختبارات العشوائية، وتحميل البيانات</p>
+                        <h1 class="text-xl font-bold">لوحة تحكم الملك أدهم حسين 👑</h1>
+                        <p class="text-xs text-gray-400">إدارة الامتحانات، المحاضرات، المذكرات، وتحميل الداتا</p>
                     </div>
                 </div>
-                <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all text-sm"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
+                <button onclick="logout()" class="flex items-center gap-1 px-3 py-1.5 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white text-xs transition-all"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
             </div>
 
-            <!-- أزرار الإجراءات السريعة وتحميل الإكسيل -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-400">الامتحانات المنشورة</p>
-                        <h3 id="admin-exams-count" class="text-3xl font-bold mt-2">0</h3>
-                    </div>
-                    <div class="p-4 bg-[#48CAE4] bg-opacity-10 text-[#48CAE4] rounded-2xl"><i data-lucide="book-open" class="w-8 h-8"></i></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-[#1C2541] p-4 rounded-xl border border-[#3A506B] flex items-center justify-between">
+                    <div><p class="text-xs text-gray-400">الامتحانات والملفات المرفوعة</p><h3 id="admin-total-count" class="text-2xl font-bold mt-1">0</h3></div>
+                    <div class="p-3 bg-[#48CAE4] bg-opacity-10 text-[#48CAE4] rounded-xl"><i data-lucide="folder-open" class="w-6 h-6"></i></div>
                 </div>
-                <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-400">إجمالي الطلاب الممتحنين</p>
-                        <h3 id="admin-results-count" class="text-3xl font-bold mt-2">0</h3>
-                    </div>
-                    <div class="p-4 bg-green-500 bg-opacity-10 text-green-400 rounded-2xl"><i data-lucide="users" class="w-8 h-8"></i></div>
+                <div class="bg-[#1C2541] p-4 rounded-xl border border-[#3A506B] flex items-center justify-between">
+                    <div><p class="text-xs text-gray-400">الطلاب المسجلين</p><h3 id="admin-results-count" class="text-2xl font-bold mt-1">0</h3></div>
+                    <div class="p-3 bg-green-500 bg-opacity-10 text-green-400 rounded-xl"><i data-lucide="users" class="w-6 h-6"></i></div>
                 </div>
-                <!-- زر تحميل الإكسيل السحري -->
-                <button onclick="downloadExcel()" class="bg-gradient-to-br from-emerald-500 to-green-600 p-6 rounded-2xl border border-emerald-400 flex flex-col items-center justify-center gap-2 hover:opacity-95 transition-opacity text-white">
-                    <i data-lucide="download-cloud" class="w-8 h-8 animate-bounce"></i>
-                    <span class="font-bold text-sm">تحميل شيت إكسيل الطلاب (Excel CSV)</span>
+                <button onclick="downloadExcel()" class="bg-gradient-to-br from-emerald-500 to-green-600 p-4 rounded-xl border border-emerald-400 flex items-center justify-center gap-2 hover:opacity-95 text-white font-bold text-sm">
+                    <i data-lucide="download-cloud" class="w-5 h-5"></i>
+                    <span>تحميل شيت إكسيل درجات الطلاب</span>
                 </button>
             </div>
 
-            <!-- صانع الأسئلة المتطور لكذا مادة وبميزة منع الغش اللامركزي -->
-            <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
-                <h2 class="text-lg font-bold mb-4 text-[#48CAE4]">صناعة امتحان ذكي جديد لكذا مادة</h2>
-                <div class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input id="exam-title" type="text" placeholder="عنوان الامتحان (مثال: اختبار الشهر الأول)" class="md:col-span-1 px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white text-right focus:outline-none focus:border-[#48CAE4]">
-                        
-                        <!-- تحديد المادة -->
-                        <select id="exam-subject" class="px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white text-right focus:outline-none focus:border-[#48CAE4]">
-                            <option value="أحياء">مادة: الأحياء 🧬</option>
-                            <option value="فيزياء">مادة: الفيزياء ⚡</option>
-                            <option value="كيمياء">مادة: الكيمياء 🧪</option>
-                            <option value="جيولوجيا">مادة: الجيولوجيا 🌍</option>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                
+                <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B] lg:col-span-2">
+                    <h2 class="text-md font-bold mb-3 text-[#48CAE4] flex items-center gap-1"><i data-lucide="plus-circle" class="w-4 h-4"></i><span>صناعة امتحان عشوائي جديد</span></h2>
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <input id="exam-title" type="text" placeholder="عنوان الامتحان" class="px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs focus:outline-none text-right">
+                            <select id="exam-subject" class="px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs focus:outline-none">
+                                <option value="لغة عربية">اللغة العربية 📚</option><option value="إنجليزي">اللغة الإنجليزية 🇬🇧</option><option value="ألماني">اللغة الألمانية 🇩🇪</option><option value="فيزياء">الفيزياء ⚡</option><option value="كيمياء">الكيمياء 🧪</option><option value="أحياء">الأحياء 🧬</option><option value="جيولوجيا">الجيولوجيا 🌍</option>
+                            </select>
+                            <input id="exam-duration" type="number" placeholder="المدة بالدقائق" class="px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs focus:outline-none">
+                        </div>
+                        <div class="p-3 bg-[#0B132B] rounded-lg border border-[#3A506B] space-y-2">
+                            <input id="q-text" type="text" placeholder="نص السؤال (الاختيار الأول تحت هو الصح دائماً)" class="w-full px-3 py-1.5 bg-[#1C2541] border border-[#3A506B] rounded text-xs focus:outline-none">
+                            <div class="grid grid-cols-2 gap-2">
+                                <input id="opt-1" type="text" placeholder="الاختيار الأول (الصحيح)" class="px-2 py-1 bg-[#1C2541] border border-emerald-500 rounded text-xs focus:outline-none">
+                                <input id="opt-2" type="text" placeholder="الاختيار الثاني" class="px-2 py-1 bg-[#1C2541] border border-[#3A506B] rounded text-xs focus:outline-none">
+                                <input id="opt-3" type="text" placeholder="الاختيار الثالث" class="px-2 py-1 bg-[#1C2541] border border-[#3A506B] rounded text-xs focus:outline-none">
+                                <input id="opt-4" type="text" placeholder="الاختيار الرابع" class="px-2 py-1 bg-[#1C2541] border border-[#3A506B] rounded text-xs focus:outline-none">
+                            </div>
+                            <button onclick="addQuestionToList()" class="px-3 py-1 bg-[#3A506B] text-white text-xs rounded hover:bg-opacity-80">حفظ السؤال الحالي</button>
+                        </div>
+                        <div id="temp-questions-count" class="text-[10px] text-gray-400">الأسئلة المجهزة: 0</div>
+                        <button onclick="publishExam()" class="w-full py-2 bg-[#48CAE4] text-[#0B132B] font-bold text-xs rounded-lg shadow">نشر الامتحان لايف للطلاب 🚀</button>
+                    </div>
+                </div>
+
+                <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
+                    <h2 class="text-md font-bold mb-3 text-[#48CAE4] flex items-center gap-1"><i data-lucide="video" class="w-4 h-4"></i><span>إضافة محاضرة أو ملخص للطلاب</span></h2>
+                    <div class="space-y-3">
+                        <select id="resource-type" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs">
+                            <option value="LECTURE">📺 محاضرة فيديو شرح</option>
+                            <option value="NOTE">📄 مذكرات وملخصات PDF</option>
                         </select>
-
-                        <input id="exam-duration" type="number" placeholder="المدة بالدقائق (مثال: 20)" class="px-4 py-2.5 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white text-right focus:outline-none">
+                        <select id="resource-subject" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs">
+                            <option value="لغة عربية">اللغة العربية</option><option value="إنجليزي">اللغة الإنجليزية</option><option value="ألماني">اللغة الألمانية</option><option value="فيزياء">الفيزياء</option><option value="كيمياء">الكيمياء</option><option value="أحياء">الأحياء</option><option value="جيولوجيا">الجيولوجيا</option>
+                        </select>
+                        <input id="resource-title" type="text" placeholder="عنوان المحاضرة أو المذكرة" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-right">
+                        <input id="resource-url" type="text" placeholder="رابط الفيديو أو رابط الـ PDF" class="w-full px-3 py-2 bg-[#0B132B] border border-[#3A506B] rounded-lg text-xs text-center font-mono">
+                        <button onclick="publishResource()" class="w-full py-2 bg-gradient-to-r from-purple-500 to-indigo-600 font-bold text-xs rounded-lg shadow">رفع ونشر الملف فوراُ ✨</button>
                     </div>
-                    
-                    <div class="p-4 bg-[#0B132B] rounded-xl border border-[#3A506B] space-y-3">
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-sm font-medium text-gray-300">أضف سؤالاً (السيستم سيلخبط الاختيارات تلقائياً لمنع الغش):</p>
-                            <span class="text-xs text-amber-400 bg-amber-400 bg-opacity-10 px-2 py-1 rounded">الاختيار الأول دائماً هو الإجابة الصحيحة</span>
-                        </div>
-                        <input id="q-text" type="text" placeholder="نص السؤال هنا..." class="w-full px-4 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-sm focus:outline-none">
-                        <div class="grid grid-cols-2 gap-2">
-                            <input id="opt-1" type="text" placeholder="الاختيار الأول (الصحيح والأكيد)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] border-emerald-500 text-white text-right text-xs focus:outline-none">
-                            <input id="opt-2" type="text" placeholder="الاختيار الثاني (خطأ)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
-                            <input id="opt-3" type="text" placeholder="الاختيار الثالث (خطأ)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
-                            <input id="opt-4" type="text" placeholder="الاختيار الرابع (خطأ)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
-                        </div>
-                        <button onclick="addQuestionToList()" class="px-4 py-2 bg-[#3A506B] text-white text-xs rounded-lg hover:bg-opacity-80 transition-all flex items-center gap-1"><i data-lucide="plus-circle" class="w-4 h-4"></i><span>حفظ السؤال وتجهيز التالي</span></button>
-                    </div>
-
-                    <div id="temp-questions-count" class="text-xs text-gray-400">الأسئلة المجهزة حالياً: 0 أسئلة للامتحان الحالي</div>
-                    <button onclick="publishExam()" class="w-full py-3 bg-[#48CAE4] text-[#0B132B] font-bold rounded-xl shadow hover:bg-opacity-90 transition-all">نشر واختبار الامتحان في منصة نابغة لايف 🚀</button>
                 </div>
             </div>
 
-            <!-- لوحة كشف درجات الطلاب مضاف لها رقم التليفون -->
-            <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B]">
-                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="table" class="text-[#48CAE4]"></i><span>كشف رصد الدرجات والبيانات الفوري</span></h2>
+            <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B] mb-6">
+                <h2 class="text-md font-bold mb-3 text-[#FF4D6D] flex items-center gap-1"><i data-lucide="edit-3" class="w-4 h-4"></i><span>لوحة إدارة وحذف المحتوى المرفوع</span></h2>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-right border-collapse">
+                    <table class="w-full text-right border-collapse text-xs">
                         <thead>
-                            <tr class="border-b border-[#3A506B] text-gray-400 text-xs">
-                                <th class="p-3">اسم الطالب</th>
-                                <th class="p-3">رقم التليفون</th>
-                                <th class="p-3">المادة</th>
-                                <th class="p-3">عنوان الامتحان</th>
-                                <th class="p-3 text-left">النتيجة والدرجة</th>
+                            <tr class="border-b border-[#3A506B] text-gray-400">
+                                <th class="p-2">النوع</th><th class="p-2">المادة</th><th class="p-2">العنوان / الإسم</th><th class="p-2 text-left">إجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-table-body" class="text-sm">
-                            <!-- المحتوى هيتحقن هنا بالجافاسكريبت -->
-                        </tbody>
+                        <tbody id="admin-management-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
+                <h2 class="text-md font-bold mb-3 flex items-center gap-1"><i data-lucide="table" class="text-[#48CAE4]"></i><span>جدول رصد درجات وبيانات طلاب نابغة</span></h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-[#3A506B] text-gray-400">
+                                <th class="p-2">اسم الطالب</th><th class="p-2">رقم التليفون</th><th class="p-2">المادة</th><th class="p-2">الإختبار</th><th class="p-2 text-left">الدرجة</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body"></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 3. لوحة تحكم الطالب والامتحانات (Student Dashboard) -->
-    <div id="student-view" class="hidden min-h-screen p-4 md:p-8">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
+    <div id="student-view" class="hidden min-h-screen p-4 md:p-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex justify-between items-center bg-[#1C2541] p-5 rounded-2xl border border-[#3A506B] mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="p-3 bg-[#48CAE4] bg-opacity-20 rounded-xl text-[#48CAE4]"><i data-lucide="user" class="w-7 h-7"></i></div>
+                    <div class="p-3 bg-[#48CAE4] bg-opacity-20 rounded-xl text-[#48CAE4]"><i data-lucide="user" class="w-6 h-6"></i></div>
                     <div>
-                        <h1 class="text-2xl font-bold">مرحباً بك في نابغة/ <span id="student-name"></span> 🎯</h1>
-                        <p class="text-sm text-gray-400">رقم الهاتف المسجل: <span id="student-phone" class="font-mono text-gray-300"></span></p>
+                        <h1 class="text-lg font-bold">مرحباً بك في منصة نابغة / <span id="student-name" class="text-[#48CAE4]"></span></h1>
+                        <p class="text-xs text-gray-400">تليفونك: <span id="student-phone" class="font-mono"></span></p>
                     </div>
                 </div>
-                <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all text-sm"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
+                <button onclick="logout()" class="px-3 py-1.5 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 text-xs hover:bg-red-600 hover:text-white transition-all"><i data-lucide="log-out" class="w-4 h-4"></i></button>
             </div>
 
-            <!-- فرز الامتحانات حسب المواد المختلفة -->
-            <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
-                <h2 class="text-lg font-bold mb-4 text-[#48CAE4] flex items-center gap-2"><i data-lucide="layers"></i><span>الاختبارات المنشورة حسب المواد</span></h2>
-                <div id="student-exams-list" class="space-y-6">
-                    <!-- تصنيفات المواد بتنزل هنا تلقائي -->
+            <div class="grid grid-cols-1 gap-6">
+                
+                <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
+                    <h2 class="text-sm font-bold text-[#48CAE4] mb-3 flex items-center gap-1 border-b border-[#3A506B] pb-2"><i data-lucide="tv"></i><span>📺 قسم محاضرات الشرح والفيديو</span></h2>
+                    <div id="student-lectures-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+
+                <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
+                    <h2 class="text-sm font-bold text-indigo-400 mb-3 flex items-center gap-1 border-b border-[#3A506B] pb-2"><i data-lucide="file-text"></i><span>📄 قسم المذكرات والملخصات PDF</span></h2>
+                    <div id="student-notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+
+                <div class="bg-[#1C2541] p-5 rounded-xl border border-[#3A506B]">
+                    <h2 class="text-sm font-bold text-amber-400 mb-3 flex items-center gap-1 border-b border-[#3A506B] pb-2"><i data-lucide="help-circle"></i><span>📝 قسم الاختبارات والتقييم الذكي (أنواع عشوائية لمنع الغش)</span></h2>
+                    <div id="student-exams-list" class="space-y-4"></div>
                 </div>
             </div>
 
-            <!-- شاشة الامتحان النشط بلخبطة الاختيارات والأسئلة كاملة -->
-            <div id="active-exam-container" class="hidden bg-[#1C2541] p-6 rounded-2xl border border-[#FF4D6D] border-opacity-50 space-y-4">
-                <div class="flex justify-between items-center border-b border-[#3A506B] pb-3">
-                    <div>
-                        <span id="active-exam-sub" class="text-xs bg-[#48CAE4] bg-opacity-20 text-[#48CAE4] px-2 py-1 rounded font-bold ml-2">مادة</span>
-                        <h3 id="active-exam-title" class="text-lg font-bold inline-block text-white">عنوان الامتحان</h3>
+            <div id="active-exam-container" class="hidden fixed inset-0 bg-[#0B132B] bg-opacity-98 p-4 md:p-8 overflow-y-auto z-50 flex items-center justify-center">
+                <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#FF4D6D] w-full max-w-3xl space-y-4 shadow-2xl">
+                    <div class="flex justify-between items-center border-b border-[#3A506B] pb-3">
+                        <div>
+                            <span id="active-exam-sub" class="text-xs bg-[#48CAE4] bg-opacity-20 text-[#48CAE4] px-2 py-0.5 rounded font-bold ml-2"></span>
+                            <h3 id="active-exam-title" class="text-md font-bold inline-block text-white"></h3>
+                        </div>
+                        <div class="text-red-400 text-sm font-bold flex items-center gap-1"><i data-lucide="timer" class="w-4 h-4 animate-spin"></i><span id="exam-timer">00:00</span></div>
                     </div>
-                    <div class="text-red-400 text-sm font-bold flex items-center gap-1"><i data-lucide="timer" class="w-4 h-4 animate-pulse"></i><span id="exam-timer">00:00</span></div>
+                    <div id="active-exam-questions" class="space-y-4 max-h-[60vh] overflow-y-auto p-1"></div>
+                    <button onclick="submitExamAnswers()" class="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl shadow">تسليم وقفل ورقة الامتحان 🏁</button>
                 </div>
-                <!-- منطقة حقن الأسئلة المعجونة والمختلفة لكل طالب -->
-                <div id="active-exam-questions" class="space-y-6 pt-2"></div>
-                <button onclick="submitExamAnswers()" class="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl shadow hover:opacity-95 transition-all text-center">تأكيد تقفيل الامتحان وإرسال الإجابات 🏁</button>
             </div>
+
         </div>
     </div>
 
-    <!-- كود محرك منصة نابغة الذكي بالكامل بالـ JavaScript المضمون -->
     <script>
         let currentRole = 'STUDENT';
         let user = null;
         const ADMIN_SECRET_OTP = "2026"; // باسوورد لوحة الأدمن الخاصة بأدهم
 
-        // داتا امتحانات تجريبية لمختلف المواد لمشاهدة قوة السيستم فوراً
-        let exams = JSON.parse(localStorage.getItem('exams')) || [
-            {
-                id: 'exam_bio_1',
-                title: 'امتحان الدعامة والحركة التجريبي',
-                subject: 'أحياء',
-                duration: 15,
-                questions: [
-                    { id: 'bq1', text: 'ما هو التركيب الأساسي لعظام الحوض؟', options: ['الحرقفة والعانة والورك', 'القص والترقوة', 'الجمجمة والعمود الفقري'], correctAnswer: 'الحرقفة والعانة والورك' },
-                    { id: 'bq2', text: 'أين توجد الأقراص البينية في الجسم؟', options: ['في عضلة القلب فقط', 'في العضلات الهيكلية', 'بين فقرات الظهر'], correctAnswer: 'في عضلة القلب فقط' }
-                ]
-            },
-            {
-                id: 'exam_phy_1',
-                title: 'امتحان قانون أوم للدوائر المغلقة',
-                subject: 'فيزياء',
-                duration: 10,
-                questions: [
-                    { id: 'pq1', text: 'ماذا يحدث للمقاومة الكهربية عند زيادة طول السلك للضعف؟', options: ['تزداد للضعف', 'تقل للنصف', 'تظل ثابتة'], correctAnswer: 'تزداد للضعف' }
-                ]
-            }
-        ];
-        
+        // داتا مخزنة تلقائياً للامتحانات والمحاضرات والمذكرات
+        let exams = JSON.parse(localStorage.getItem('exams')) || [];
+        let resources = JSON.parse(localStorage.getItem('resources')) || [];
         let results = JSON.parse(localStorage.getItem('results')) || [];
+        
         let currentTempQuestions = [];
         let activeExam = null;
-        let shuffledQuestionsForCurrentExam = []; // لحفظ النسخة العشوائية الخاصة بالطالب الحالي
         let timerInterval = null;
 
-        // دالة مساعدة لعمل خلخلة ولخبطة عشوائية لأي مصفوفة (منع الغش والتكرار)
+        const ALL_SUBJECTS = ['لغة عربية', 'إنجليزي', 'ألماني', 'فيزياء', 'كيمياء', 'أحياء', 'جيولوجيا'];
+
         function shuffleArray(array) {
             let shuffled = [...array];
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -260,16 +239,14 @@
             const nameLabel = document.getElementById('name-label');
             
             if(role === 'STUDENT') {
-                btnStudent.className = "py-3 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]";
-                btnAdmin.className = "py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
-                phoneArea.classList.remove('hidden');
-                otpArea.classList.add('hidden');
+                btnStudent.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]";
+                btnAdmin.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+                phoneArea.classList.remove('hidden'); otpArea.classList.add('hidden');
                 nameLabel.innerText = "اسم الطالب بالكامل";
             } else {
-                btnAdmin.className = "py-3 rounded-xl font-medium border transition-all bg-[#FF4D6D] text-white border-[#FF4D6D]";
-                btnStudent.className = "py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
-                phoneArea.classList.add('hidden');
-                otpArea.classList.remove('hidden');
+                btnAdmin.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#FF4D6D] text-white border-[#FF4D6D]";
+                btnStudent.className = "py-2.5 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500";
+                phoneArea.classList.add('hidden'); otpArea.classList.remove('hidden');
                 nameLabel.innerText = "اسم الأدمن (أدهم)";
             }
             lucide.createIcons();
@@ -283,56 +260,68 @@
             const errorText = document.getElementById('error-text');
 
             if(!nameInput) {
-                errorText.innerText = "من فضلك اكتب الاسم أولاً";
-                errorDiv.classList.remove('hidden');
-                return;
+                errorText.innerText = "اكتب الاسم أولاً"; errorDiv.classList.remove('hidden'); return;
             }
-
             if(currentRole === 'STUDENT' && !phoneInput) {
-                errorText.innerText = "من فضلك اكتب رقم تليفونك لتسجيل نتيجتك وحفظ بياناتك في الشيت";
-                errorDiv.classList.remove('hidden');
-                return;
+                errorText.innerText = "رقم التليفون مطلوب لتسجيل الداتا"; errorDiv.classList.remove('hidden'); return;
             }
-
-            if(currentRole === 'ADMIN') {
-                if(otpInput !== ADMIN_SECRET_OTP) {
-                    errorText.innerText = "عذراً! كود التحقق السري خاطئ. لا يمكن العبور للوحة تحكم الأدمن.";
-                    errorDiv.classList.remove('hidden');
-                    return;
-                }
+            if(currentRole === 'ADMIN' && otpInput !== ADMIN_SECRET_OTP) {
+                errorText.innerText = "كود الأدمن السري خاطئ!"; errorDiv.classList.remove('hidden'); return;
             }
 
             errorDiv.classList.add('hidden');
-            user = { name: nameInput, phone: phoneInput || 'أدمن المنصة', role: currentRole };
+            user = { name: nameInput, phone: phoneInput || 'أدمن', role: currentRole };
             document.getElementById('login-view').classList.add('hidden');
 
-            if(user.role === 'ADMIN') {
-                showAdminDashboard();
-            } else {
-                showStudentDashboard();
-            }
+            if(user.role === 'ADMIN') showAdminDashboard(); else showStudentDashboard();
         }
 
         function showAdminDashboard() {
             document.getElementById('admin-view').classList.remove('hidden');
-            document.getElementById('admin-exams-count').innerText = exams.length;
+            document.getElementById('admin-total-count').innerText = exams.length + resources.length;
             document.getElementById('admin-results-count').innerText = results.length;
             
+            // 1. جدول رصد الدرجات
             const tableBody = document.getElementById('admin-table-body');
-            if(results.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">لا توجد بيانات طلاب مسجلة حتى الآن في شيت منصة نابغة.</td></tr>`;
-            } else {
-                tableBody.innerHTML = results.map(r => `
-                    <tr class="border-b border-[#3A506B] border-opacity-40 hover:bg-[#1C2541] hover:bg-opacity-40 transition-colors">
-                        <td class="p-3 font-bold text-white">${r.studentName}</td>
-                        <td class="p-3 text-gray-300 font-mono text-xs">${r.studentPhone}</td>
-                        <td class="p-3"><span class="bg-[#48CAE4] bg-opacity-10 text-[#48CAE4] px-2 py-0.5 rounded text-xs font-bold">${r.subject}</span></td>
-                        <td class="p-3 text-gray-400 text-xs">${r.examTitle}</td>
-                        <td class="p-3 text-left font-bold text-green-400 font-mono">${r.score} / ${r.total}</td>
+            tableBody.innerHTML = results.length === 0 ? `<tr><td colspan="5" class="p-2 text-center text-gray-500">لا يوجد طلاب ممتحنين بعد.</td></tr>` : 
+                results.map(r => `
+                    <tr class="border-b border-[#3A506B] border-opacity-30 hover:bg-[#1C2541]">
+                        <td class="p-2 font-bold">${r.studentName}</td><td class="p-2 font-mono">${r.studentPhone}</td>
+                        <td class="p-2"><span class="bg-[#48CAE4] bg-opacity-10 text-[#48CAE4] px-1.5 py-0.5 rounded text-[10px]">${r.subject}</span></td>
+                        <td class="p-2 text-gray-400">${r.examTitle}</td><td class="p-2 text-left font-bold text-green-400">${r.score} / ${r.total}</td>
                     </tr>
                 `).join('');
-            }
+
+            // 2. جدول الحذف والإدارة للمحتوى المرفوع
+            const mgmtBody = document.getElementById('admin-management-body');
+            let mgmtHtml = '';
+            
+            exams.forEach(e => {
+                mgmtHtml += `
+                    <tr class="border-b border-[#3A506B] border-opacity-30">
+                        <td class="p-2 text-amber-400 font-bold">📝 امتحان</td><td class="p-2 text-gray-400">${e.subject}</td><td class="p-2">${e.title}</td>
+                        <td class="p-2 text-left"><button onclick="deleteItem('EXAM', '${e.id}')" class="text-red-400 hover:text-red-600 font-bold">مسح فوري</button></td>
+                    </tr>`;
+            });
+            resources.forEach(r => {
+                mgmtHtml += `
+                    <tr class="border-b border-[#3A506B] border-opacity-30">
+                        <td class="p-2 ${r.type === 'LECTURE'?'text-blue-400':'text-indigo-400'} font-bold">${r.type === 'LECTURE'?'📺 محاضرة':'📄 مذكرة'}</td><td class="p-2 text-gray-400">${r.subject}</td><td class="p-2">${r.title}</td>
+                        <td class="p-2 text-left"><button onclick="deleteItem('RESOURCE', '${r.id}')" class="text-red-400 hover:text-red-600 font-bold">مسح فوري</button></td>
+                    </tr>`;
+            });
+            mgmtBody.innerHTML = mgmtHtml === '' ? `<tr><td colspan="4" class="p-2 text-center text-gray-500">لا يوجد محتوى مرفوع حالياً.</td></tr>` : mgmtHtml;
             lucide.createIcons();
+        }
+
+        function deleteItem(type, id) {
+            if(!confirm('هل أنت متأكد تماماً إنك عاوز تمسح العنصر ده من منصة نابغة؟')) return;
+            if(type === 'EXAM') {
+                exams = exams.filter(e => e.id !== id); localStorage.setItem('exams', JSON.stringify(exams));
+            } else {
+                resources = resources.filter(r => r.id !== id); localStorage.setItem('resources', JSON.stringify(resources));
+            }
+            showAdminDashboard();
         }
 
         function addQuestionToList() {
@@ -342,25 +331,14 @@
             const opt3 = document.getElementById('opt-3').value.trim();
             const opt4 = document.getElementById('opt-4').value.trim();
 
-            if(!text || !opt1 || !opt2) {
-                alert('من فضلك اكتب نص السؤال وخيارين على الأقل (الأول هو الصح)');
-                return;
-            }
+            if(!text || !opt1 || !opt2) { alert('اكتب السؤال وخيارين على الأقل'); return; }
 
             currentTempQuestions.push({
-                id: 'q_' + Math.random().toString(36).substr(2, 9),
-                text: text,
-                options: [opt1, opt2, opt3, opt4].filter(o => o !== ''),
-                correctAnswer: opt1 // الكود هيعرف إن الأول هو الصح مهما اتلخبط برة قدام الطالب
+                id: 'q_' + Math.random().toString(36).substr(2, 9), text: text,
+                options: [opt1, opt2, opt3, opt4].filter(o => o !== ''), correctAnswer: opt1
             });
-
-            document.getElementById('temp-questions-count').innerText = `الأسئلة المجهزة حالياً: ${currentTempQuestions.length} أسئلة للامتحان الحالي`;
-            
-            document.getElementById('q-text').value = '';
-            document.getElementById('opt-1').value = '';
-            document.getElementById('opt-2').value = '';
-            document.getElementById('opt-3').value = '';
-            document.getElementById('opt-4').value = '';
+            document.getElementById('temp-questions-count').innerText = `الأسئلة المجهزة: ${currentTempQuestions.length}`;
+            document.getElementById('q-text').value = ''; document.getElementById('opt-1').value = ''; document.getElementById('opt-2').value = ''; document.getElementById('opt-3').value = ''; document.getElementById('opt-4').value = '';
         }
 
         function publishExam() {
@@ -368,27 +346,26 @@
             const subject = document.getElementById('exam-subject').value;
             const duration = document.getElementById('exam-duration').value.trim();
 
-            if(!title || currentTempQuestions.length === 0) {
-                alert('اكتب عنوان الاختبار وأضف سؤالاً واحداً على الأقل لحفظ البيانات');
-                return;
-            }
+            if(!title || currentTempQuestions.length === 0) { alert('اكتب عنوان الامتحان وأضف أسئلة'); return; }
 
-            exams.push({
-                id: 'exam_' + Math.random().toString(36).substr(2, 9),
-                title: title,
-                subject: subject,
-                duration: Number(duration) || 15,
-                questions: currentTempQuestions
-            });
-
+            exams.push({ id: 'exam_' + Math.random().toString(36).substr(2, 9), title: title, subject: subject, duration: Number(duration) || 15, questions: currentTempQuestions });
             localStorage.setItem('exams', JSON.stringify(exams));
-            currentTempQuestions = [];
-            document.getElementById('exam-title').value = '';
-            document.getElementById('exam-duration').value = '';
-            document.getElementById('temp-questions-count').innerText = `الأسئلة المجهزة حالياً: 0 أسئلة للامتحان الحالي`;
-            
-            showAdminDashboard();
-            alert(`تم رفع ونشر امتحان الـ ${subject} الجديد بنجاح في السيستم! 🚀`);
+            currentTempQuestions = []; document.getElementById('exam-title').value = ''; document.getElementById('exam-duration').value = ''; document.getElementById('temp-questions-count').innerText = "الأسئلة المجهزة: 0";
+            showAdminDashboard(); alert('تم نشر ونشر الاختبار بنجاح! 🎉');
+        }
+
+        function publishResource() {
+            const type = document.getElementById('resource-type').value;
+            const subject = document.getElementById('resource-subject').value;
+            const title = document.getElementById('resource-title').value.trim();
+            const url = document.getElementById('resource-url').value.trim();
+
+            if(!title || !url) { alert('اكتب العنوان وحط الرابط بالكامل'); return; }
+
+            resources.push({ id: 'res_' + Math.random().toString(36).substr(2, 9), type: type, subject: subject, title: title, url: url });
+            localStorage.setItem('resources', JSON.stringify(resources));
+            document.getElementById('resource-title').value = ''; document.getElementById('resource-url').value = '';
+            showAdminDashboard(); alert('تم نشر الملف المادة بنجاح لايف للطلاب! ✨');
         }
 
         function showStudentDashboard() {
@@ -396,41 +373,49 @@
             document.getElementById('student-name').innerText = user.name;
             document.getElementById('student-phone').innerText = user.phone;
             
-            const examsList = document.getElementById('student-exams-list');
-            
-            // تجميع الامتحانات وتصنيفها حسب المادة تلقائياً
-            const subjects = ['أحياء', 'فيزياء', 'كيمياء', 'جيولوجيا'];
-            let htmlContent = '';
+            // تجميع وعرض المحاضرات
+            const lecList = document.getElementById('student-lectures-list');
+            const lecs = resources.filter(r => r.type === 'LECTURE');
+            lecList.innerHTML = lecs.length === 0 ? `<p class="text-xs text-gray-500">لا توجد محاضرات فيديو مرفوعة حالياً.</p>` : 
+                lecs.map(l => `
+                    <div class="p-3 bg-[#0B132B] rounded-lg border border-[#3A506B] flex justify-between items-center text-xs">
+                        <div><p class="font-bold text-white">${l.title}</p><p class="text-[10px] text-gray-400 mt-1">مادة: ${l.subject}</p></div>
+                        <a href="${l.url}" target="_blank" class="px-3 py-1 bg-blue-600 text-white font-bold rounded hover:bg-opacity-90">📺 تشغيل الفيديو</a>
+                    </div>
+                `).join('');
 
-            subjects.forEach(sub => {
+            // تجميع وعرض المذكرات
+            const noteList = document.getElementById('student-notes-list');
+            const notes = resources.filter(r => r.type === 'NOTE');
+            noteList.innerHTML = notes.length === 0 ? `<p class="text-xs text-gray-500">لا توجد مذكرات أو ملخصات مرفوعة حالياً.</p>` : 
+                notes.map(n => `
+                    <div class="p-3 bg-[#0B132B] rounded-lg border border-[#3A506B] flex justify-between items-center text-xs">
+                        <div><p class="font-bold text-white">${n.title}</p><p class="text-[10px] text-gray-400 mt-1">مادة: ${n.subject}</p></div>
+                        <a href="${n.url}" target="_blank" class="px-3 py-1 bg-indigo-600 text-white font-bold rounded hover:bg-opacity-90">📄 تحميل الـ PDF</a>
+                    </div>
+                `).join('');
+
+            // تجميع وعرض الامتحانات مقسمة حسب الـ 7 مواد المتاحة
+            const examsList = document.getElementById('student-exams-list');
+            let examsHtml = '';
+            ALL_SUBJECTS.forEach(sub => {
                 const subExams = exams.filter(e => e.subject === sub);
                 if(subExams.length > 0) {
-                    htmlContent += `
-                        <div class="border border-[#3A506B] border-opacity-50 p-4 rounded-xl bg-[#0B132B]">
-                            <h3 class="text-sm font-bold text-[#48CAE4] mb-3 border-b border-[#3A506B] pb-2 flex items-center gap-1.5">
-                                <span>قسم مادة: ${sub}</span>
-                            </h3>
-                            <div class="space-y-3">
+                    examsHtml += `
+                        <div class="p-3 bg-[#0B132B] rounded-lg border border-[#3A506B] border-opacity-50">
+                            <h4 class="text-xs font-bold text-amber-400 border-b border-[#3A506B] pb-1.5 mb-2">امتحانات مادة: ${sub}</h4>
+                            <div class="space-y-2">
                                 ${subExams.map(e => `
-                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-[#1C2541] rounded-lg border border-[#3A506B] border-opacity-30 gap-3">
-                                        <div>
-                                            <h4 class="font-bold text-white text-sm">${e.title}</h4>
-                                            <p class="text-xs text-gray-400 mt-1">الزمن المعطى: ${e.duration} دقائق | عدد الأسئلة: ${e.questions.length}</p>
-                                        </div>
-                                        <button onclick="startExam('${e.id}')" class="px-4 py-1.5 bg-[#48CAE4] text-[#0B132B] font-bold rounded-lg text-xs shadow hover:opacity-90">دخول الاختبار 📝</button>
+                                    <div class="flex justify-between items-center bg-[#1C2541] p-2.5 rounded border border-[#3A506B] border-opacity-30 text-xs">
+                                        <div><p class="font-bold">${e.title}</p><p class="text-[10px] text-gray-400 mt-0.5">الزمن: ${e.duration} دقائق | الأسئلة: ${e.questions.length}</p></div>
+                                        <button onclick="startExam('${e.id}')" class="px-3 py-1 bg-amber-500 text-[#0B132B] font-bold rounded hover:bg-opacity-90">دخول الامتحان 📝</button>
                                     </div>
                                 `).join('')}
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 }
             });
-
-            if(htmlContent === '') {
-                examsList.innerHTML = `<p class="text-center text-sm text-gray-500">لا توجد اختبارات مرفوعة حالياً في أي مادة.</p>`;
-            } else {
-                examsList.innerHTML = htmlContent;
-            }
+            examsList.innerHTML = examsHtml === '' ? `<p class="text-xs text-gray-500">لا توجد امتحانات ذكية منشورة حالياً.</p>` : examsHtml;
             lucide.createIcons();
         }
 
@@ -438,41 +423,35 @@
             activeExam = exams.find(e => e.id === examId);
             document.getElementById('active-exam-container').classList.remove('hidden');
             document.getElementById('active-exam-title').innerText = activeExam.title;
-            document.getElementById('active-exam-sub').innerText = activeExam.subject;
+            document.getElementById('active-exam-sub').innerText = "مادة " + activeExam.subject;
             
-            // ميزة منع الغش الفتاكة: لخبطة عشوائية تامة للأسئلة أولاً
-            shuffledQuestionsForCurrentExam = shuffleArray(activeExam.questions);
+            // ميزة التنوع القصوى ومنع الغش: لخبطة الأسئلة عشوائياً بالكامل
+            const shuffledQs = shuffleArray(activeExam.questions);
 
             const qContainer = document.getElementById('active-exam-questions');
-            qContainer.innerHTML = shuffledQuestionsForCurrentExam.map((q, idx) => {
-                // ميزة التنوع القصوى: لخبطة ترتيب الاختيارات جوة كل سؤال عشوائياً لكل طالب على حدة!
-                const randomizedOptions = shuffleArray(q.options);
-
+            qContainer.innerHTML = shuffledQs.map((q, idx) => {
+                // لخبطة الاختيارات جوه كل سؤال بشكل منفصل تماماً
+                const shuffledOpts = shuffleArray(q.options);
                 return `
-                    <div class="space-y-3 bg-[#0B132B] p-5 rounded-xl border border-[#3A506B]">
-                        <p class="text-sm font-medium text-white"><span class="text-[#48CAE4] font-bold">سؤال ${idx+1}:</span> ${q.text}</p>
+                    <div class="space-y-2 bg-[#0B132B] p-4 rounded-xl border border-[#3A506B] text-xs">
+                        <p class="font-bold text-white"><span class="text-[#48CAE4]">سؤال ${idx+1}:</span> ${q.text}</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            ${randomizedOptions.map(opt => `
-                                <label class="flex items-center gap-2 p-3 rounded-lg bg-[#1C2541] border border-[#3A506B] cursor-pointer text-xs hover:border-[#48CAE4] transition-all">
-                                    <input type="radio" name="ans_${q.id}" value="${opt}" class="accent-[#48CAE4] w-4 h-4">
+                            ${shuffledOpts.map(opt => `
+                                <label class="flex items-center gap-2 p-2 rounded bg-[#1C2541] border border-[#3A506B] cursor-pointer hover:border-[#48CAE4] transition-all">
+                                    <input type="radio" name="ans_${q.id}" value="${opt}" class="accent-[#48CAE4]">
                                     <span>${opt}</span>
                                 </label>
                             `).join('')}
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }).join('');
 
             let timeLeft = activeExam.duration * 60;
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
-                let mins = Math.floor(timeLeft / 60);
-                let secs = timeLeft % 60;
+                let mins = Math.floor(timeLeft / 60); let secs = timeLeft % 60;
                 document.getElementById('exam-timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-                if(timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    submitExamAnswers();
-                }
+                if(timeLeft <= 0) { clearInterval(timerInterval); submitExamAnswers(); }
                 timeLeft--;
             }, 1000);
             lucide.createIcons();
@@ -481,72 +460,35 @@
         function submitExamAnswers() {
             clearInterval(timerInterval);
             let score = 0;
-            
-            // حساب الدرجة بناءاً على الإجابة الصحيحة الأصلية المخزنة
             activeExam.questions.forEach(q => {
                 const selected = document.querySelector(`input[name="ans_${q.id}"]:checked`);
-                if(selected && selected.value === q.correctAnswer) {
-                    score++;
-                }
+                if(selected && selected.value === q.correctAnswer) score++;
             });
 
-            // تسجيل الدرجة مع تيفون الطالب والمادة في قاعدة البيانات
-            results.push({
-                studentName: user.name,
-                studentPhone: user.phone,
-                subject: activeExam.subject,
-                examTitle: activeExam.title,
-                score: score,
-                total: activeExam.questions.length
-            });
-
+            results.push({ studentName: user.name, studentPhone: user.phone, subject: activeExam.subject, examTitle: activeExam.title, score: score, total: activeExam.questions.length });
             localStorage.setItem('results', JSON.stringify(results));
             document.getElementById('active-exam-container').classList.add('hidden');
             
-            alert(`تم إنهاء وتقفيل الامتحان بنجاح يا نابغة! 🎉\nدرجتك الفورية هي: ${score} من ${activeExam.questions.length}\nتم حفظ بياناتك وتليفونك في شيت الأدمن.`);
-            activeExam = null;
-            showStudentDashboard();
+            alert(`تم تقفيل الامتحان بنجاح يا نابغة! 🎉\nدرجتك هي: ${score} من ${activeExam.questions.length}`);
+            activeExam = null; showStudentDashboard();
         }
 
-        // دالة تحميل البيانات الفورية في ملف إكسيل حقيقي بنظام ترميز UTF-8 للغة العربية
         function downloadExcel() {
-            if(results.length === 0) {
-                alert('لا توجد بيانات طلاب مسجلة حالياً لتحميلها في شيت الإكسيل.');
-                return;
-            }
-
-            // ترويسة شيت الإكسيل
-            let csvContent = "\ufeff"; // إضافة الـ BOM لضمان قراءة الحروف العربية بوضوح في برنامج Excel
-            csvContent += "اسم الطالب,رقم التليفون,المادة,عنوان الامتحان,الدرجة المرصودة,الدرجة الكلية\n";
-
-            // حقن البيانات صف بصف
-            results.forEach(r => {
-                csvContent += `"${r.studentName}","${r.studentPhone}","${r.subject}","${r.examTitle}","${r.score}","${r.total}"\n`;
-            });
-
-            // تصنيع ملف التحميل السريع
+            if(results.length === 0) { alert('لا توجد داتا طلاب لتحميلها'); return; }
+            let csvContent = "\ufeffاسم الطالب,رقم التليفون,المادة,عنوان الامتحان,الدرجة المرصودة,الدرجة الكلية\n";
+            results.forEach(r => { csvContent += `"${r.studentName}","${r.studentPhone}","${r.subject}","${r.examTitle}","${r.score}","${r.total}"\n`; });
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", `شيت_طلاب_منصة_نابغة_${new Date().toLocaleDateString('ar-EG')}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            link.setAttribute("href", URL.createObjectURL(blob));
+            link.setAttribute("download", `شيت_طلاب_نابغة.csv`);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         function logout() {
-            user = null;
-            clearInterval(timerInterval);
-            document.getElementById('admin-view').classList.add('hidden');
-            document.getElementById('student-view').classList.add('hidden');
-            document.getElementById('active-exam-container').classList.add('hidden');
-            document.getElementById('username').value = '';
-            document.getElementById('userphone').value = '';
-            document.getElementById('otp-code').value = '';
-            document.getElementById('login-view').classList.remove('hidden');
-            setRole('STUDENT');
+            user = null; clearInterval(timerInterval);
+            document.getElementById('admin-view').classList.add('hidden'); document.getElementById('student-view').classList.add('hidden'); document.getElementById('active-exam-container').classList.add('hidden');
+            document.getElementById('username').value = ''; document.getElementById('userphone').value = ''; document.getElementById('otp-code').value = '';
+            document.getElementById('login-view').classList.remove('hidden'); setRole('STUDENT');
         }
 
         lucide.createIcons();

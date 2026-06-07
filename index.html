@@ -25,14 +25,14 @@
             <div class="space-y-6">
                 <div>
                     <label class="block mb-2 text-sm font-medium text-gray-300">اسم المستخدم</label>
-                    <input id="username" type="text" placeholder="اكتب اسمك الثلاثي هنا..." class="w-full px-4 py-3 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-right">
+                    <input id="username" type="text" placeholder="اكتب اسمك هنا..." class="w-full px-4 py-3 rounded-xl bg-[#0B132B] border border-[#3A506B] text-white focus:outline-none focus:border-[#48CAE4] transition-colors text-right">
                 </div>
 
                 <div>
                     <label class="block mb-2 text-sm font-medium text-gray-300">نوع الحساب (الصلاحية)</label>
                     <div class="grid grid-cols-2 gap-4">
-                        <button onclick="setRole('STUDENT')" id="btn-student" class="py-3 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]">طالب عام</button>
-                        <button onclick="setRole('ADMIN')" id="btn-admin" class="py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500">معلم / مدير</button>
+                        <button onclick="setRole('STUDENT')" id="btn-student" class="py-3 rounded-xl font-medium border transition-all bg-[#48CAE4] text-[#0B132B] border-[#48CAE4]">طالب</button>
+                        <button onclick="setRole('ADMIN')" id="btn-admin" class="py-3 rounded-xl font-medium border transition-all bg-[#0B132B] text-gray-400 border-[#3A506B] hover:border-gray-500">الأدمن (أدهم)</button>
                     </div>
                 </div>
 
@@ -50,21 +50,21 @@
         </div>
     </div>
 
-    <!-- 2. لوحة تحكم المعلم (Admin Dashboard) -->
+    <!-- 2. لوحة تحكم الأدمن (Admin Dashboard) -->
     <div id="admin-view" class="hidden min-h-screen p-4 md:p-8">
         <div class="max-w-5xl mx-auto">
             <div class="flex justify-between items-center bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] mb-8">
                 <div class="flex items-center gap-3">
-                    <div class="p-3 bg-[#FF4D6D] bg-opacity-20 rounded-xl text-[#FF4D6D]"><i data-lucide="book-open" class="w-7 h-7"></i></div>
+                    <div class="p-3 bg-[#FF4D6D] bg-opacity-20 rounded-xl text-[#FF4D6D]"><i data-lucide="sliders" class="w-7 h-7"></i></div>
                     <div>
-                        <h1 class="text-2xl font-bold">أهلاً بك يا أستاذ/ <span id="admin-name"></span></h1>
-                        <p class="text-sm text-gray-400">لوحة تحكم المعلم وإدارة الامتحانات</p>
+                        <h1 class="text-2xl font-bold">لوحة تحكم الأدمن/ <span id="admin-name"></span></h1>
+                        <p class="text-sm text-gray-400">إدارة المنصة، صناعة الامتحانات، ومتابعة النتائج</p>
                     </div>
                 </div>
                 <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-600 bg-opacity-20 border border-red-600 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all text-sm"><i data-lucide="log-out" class="w-4 h-4"></i><span>خروج</span></button>
             </div>
 
-            <!-- إحصائيات المدرس -->
+            <!-- إحصائيات الأدمن -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="bg-[#1C2541] p-6 rounded-2xl border border-[#3A506B] flex items-center justify-between">
                     <div>
@@ -93,7 +93,7 @@
                         <p class="text-sm font-medium text-gray-300">أضف سؤالاً اختيار من متعدد:</p>
                         <input id="q-text" type="text" placeholder="نص السؤال..." class="w-full px-4 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-sm focus:outline-none">
                         <div class="grid grid-cols-2 gap-2">
-                            <input id="opt-1" type="text" placeholder="الاختيار الأول (الصحيح)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
+                            <input id="opt-1" type="text" placeholder="الافتيار الأول (الصحيح)" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
                             <input id="opt-2" type="text" placeholder="الاختيار الثاني" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
                             <input id="opt-3" type="text" placeholder="الاختيار الثالث" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
                             <input id="opt-4" type="text" placeholder="الاختيار الرابع" class="px-3 py-2 rounded-lg bg-[#1C2541] border border-[#3A506B] text-white text-right text-xs focus:outline-none">
@@ -152,7 +152,6 @@
 
     <!-- كود المحرك وتشغيل السيستم بالكامل بالـ JavaScript المضمون -->
     <script>
-        // قاعدة البيانات المحلية في المتصفح لتخزين البيانات منعاً للضياع عند عمل ريفريش
         let currentRole = 'STUDENT';
         let user = null;
         let exams = JSON.parse(localStorage.getItem('exams')) || [
@@ -170,7 +169,6 @@
         let activeExam = null;
         let timerInterval = null;
 
-        // دالة تحديد الصلاحية في شاشة اللوجن
         function setRole(role) {
             currentRole = role;
             const btnStudent = document.getElementById('btn-student');
@@ -184,14 +182,13 @@
             }
         }
 
-        // دالة تسجيل الدخول والتوجيه للوحة المناسبة
         function handleLogin() {
             const nameInput = document.getElementById('username').value.trim();
             const errorDiv = document.getElementById('login-error');
             const errorText = document.getElementById('error-text');
 
             if(!nameInput) {
-                errorText.innerText = "من فضلك اكتب اسمك الثلاثي أولاً";
+                errorText.innerText = "من فضلك اكتب اسمك أولاً";
                 errorDiv.classList.remove('hidden');
                 return;
             }
@@ -207,14 +204,12 @@
             }
         }
 
-        // لوحة تحكم المعلم
         function showAdminDashboard() {
             document.getElementById('admin-view').classList.remove('hidden');
             document.getElementById('admin-name').innerText = user.name;
             document.getElementById('admin-exams-count').innerText = exams.length;
             document.getElementById('admin-results-count').innerText = results.length;
             
-            // رندر جدول الدرجات والنتائج
             const resultsList = document.getElementById('admin-results-list');
             if(results.length === 0) {
                 resultsList.innerHTML = "لا توجد نتائج مسجلة حتى الآن.";
@@ -230,7 +225,6 @@
             lucide.createIcons();
         }
 
-        // تجميع أسئلة الامتحان الجديد في قائمة مؤقتة
         function addQuestionToList() {
             const text = document.getElementById('q-text').value.trim();
             const opt1 = document.getElementById('opt-1').value.trim();
@@ -247,12 +241,11 @@
                 id: 'q_' + Math.random().toString(36).substr(2, 9),
                 text: text,
                 options: [opt1, opt2, opt3, opt4].filter(o => o !== ''),
-                correctAnswer: opt1 // دايماً الخيار الأول المكتوب هو الصح لتسهيل الكود
+                correctAnswer: opt1
             });
 
             document.getElementById('temp-questions-count').innerText = `الأسئلة المجهزة حالياً: ${currentTempQuestions.length} أسئلة`;
             
-            // تصفية الخانات لسؤال جديد
             document.getElementById('q-text').value = '';
             document.getElementById('opt-1').value = '';
             document.getElementById('opt-2').value = '';
@@ -260,7 +253,6 @@
             document.getElementById('opt-4').value = '';
         }
 
-        // نشر الامتحان وحفظه في الـ LocalStorage للابد
         function publishExam() {
             const title = document.getElementById('exam-title').value.trim();
             const duration = document.getElementById('exam-duration').value.trim();
@@ -287,7 +279,6 @@
             alert('تم نشر الامتحان لايف بنجاح والطلاب يقدروا يفتحوه حالا! 🚀');
         }
 
-        // لوحة تحكم الطالب
         function showStudentDashboard() {
             document.getElementById('student-view').classList.remove('hidden');
             document.getElementById('student-name').innerText = user.name;
@@ -305,13 +296,11 @@
             lucide.createIcons();
         }
 
-        // بدء المؤقت والامتحان للطالب
-        function startExam(examId) {
+        fnction startExam(examId) {
             activeExam = exams.find(e => e.id === examId);
             document.getElementById('active-exam-container').classList.remove('hidden');
             document.getElementById('active-exam-title').innerText = activeExam.title;
             
-            // رندر الأسئلة
             const qContainer = document.getElementById('active-exam-questions');
             qContainer.innerHTML = activeExam.questions.map((q, idx) => `
                 <div class="space-y-3 bg-[#0B132B] p-4 rounded-xl border border-[#3A506B]">
@@ -327,7 +316,6 @@
                 </div>
             `).join('');
 
-            // تشغيل الـ Timer
             let timeLeft = activeExam.duration * 60;
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
@@ -343,7 +331,6 @@
             lucide.createIcons();
         }
 
-        // تصحيح الامتحان تلقائياً وحفظ النتيجة فورياً
         function submitExamAnswers() {
             clearInterval(timerInterval);
             let score = 0;
@@ -364,12 +351,11 @@
 
             localStorage.setItem('results', JSON.stringify(results));
             document.getElementById('active-exam-container').classList.add('hidden');
-            alert(`الحمدلله أتممت الامتحان بنجاح يا بطل! 🎉\nدرجتك هي: ${score} من ${activeExam.questions.length}\nتم إرسال درجتك فوراً للأستاذ.`);
+            alert(`الحمدلله أتممت الامتحان بنجاح يا بطل! 🎉\nدرجتك هي: ${score} من ${activeExam.questions.length}\nتم إرسال درجتك فوراً للأدمن.`);
             activeExam = null;
             showStudentDashboard();
         }
 
-        // تسجيل الخروج والعودة للوجن
         function logout() {
             user = null;
             clearInterval(timerInterval);
@@ -380,7 +366,6 @@
             document.getElementById('login-view').classList.remove('hidden');
         }
 
-        // تهيئة الأيقونات عند أول فتح للموقع
         lucide.createIcons();
     </script>
 </body>
